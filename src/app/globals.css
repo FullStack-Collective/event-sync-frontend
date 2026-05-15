@@ -2,26 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary: #ffc600;
+    --secondary: #0088ff;
+    --accent: #ff005d;
+    --background: #193549;
+    --foreground: #ffffff;
+    --surface: #15232d;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-full hover:bg-primary-600;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-background font-semibold py-2 px-4 rounded-lg 
+           transition-all duration-200 hover:bg-primary-600 
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white font-semibold py-2 px-4 rounded-lg 
+           transition-all duration-200 hover:bg-secondary-600 
+           focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white font-semibold py-2 px-4 rounded-lg 
+           transition-all duration-200 hover:bg-accent-600 
+           focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary font-semibold py-2 px-4 rounded-lg 
+           transition-all duration-200 hover:bg-primary hover:text-background 
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .card {
+    @apply bg-surface rounded-xl shadow-card transition-all duration-300 
+           hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  .card-header {
+    @apply p-6 border-b border-border;
+  }
+
+  .card-body {
+    @apply p-6;
+  }
+
+  .card-footer {
+    @apply p-6 border-t border-border;
+  }
+
+  .badge-primary {
+    @apply bg-primary/20 text-primary px-2 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary/20 text-secondary px-2 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-accent {
+    @apply bg-accent/20 text-accent px-2 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-live {
+    @apply bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold 
+           animate-pulse;
+  }
+
+  .input {
+    @apply bg-surface border border-border rounded-lg px-4 py-2 
+           text-foreground placeholder-muted
+           focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
+           transition-all duration-200;
+  }
+
+  .nav-link {
+    @apply text-muted hover:text-primary transition-colors duration-200;
+  }
+
+  .nav-link-active {
+    @apply text-primary font-semibold;
+  }
+
+  .skeleton {
+    @apply bg-surface animate-pulse rounded-lg;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-gradient-primary {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+
+  .glow-primary {
+    @apply shadow-glow-sm;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  .animation-delay-700 {
+    animation-delay: 700ms;
+  }
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
   }
 }
