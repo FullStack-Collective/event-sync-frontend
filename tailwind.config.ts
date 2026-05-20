@@ -12,14 +12,31 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      
+      /* ─── FONTS ─── */
       fontFamily: {
         sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-syne)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "monospace"],
       },
 
+      /* ─── EVENTSYNC COLORS (votre design) ─── */
       colors: {
+        // EventSync palette
+        "es-bg": "#06060f",
+        "es-bg2": "#0d0d1e",
+        "es-bg3": "#111128",
+        "es-violet": "#7c3aed",
+        "es-violet-light": "#a855f7",
+        "es-cyan": "#06b6d4",
+        "es-cyan-light": "#67e8f9",
+        "es-pink": "#ec4899",
+        "es-gold": "#f59e0b",
+        "es-text": "#f1f0ff",
+        "es-text-muted": "#8b8aaa",
+        "es-text-dim": "#4a4a6a",
+        "es-live": "#22c55e",
+
+        // Vos couleurs existantes (conservées)
         primary: "#ffc600",
         secondary: "#0088ff",
         accent: "#ff005d",
@@ -82,6 +99,7 @@ const config: Config = {
         "gradient-end": "#ff005d",
       },
 
+      /* ─── ANIMATIONS ─── */
       animation: {
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "bounce-slow": "bounce 2s infinite",
@@ -90,6 +108,15 @@ const config: Config = {
         "fade-in": "fadeIn 0.3s ease-in",
         glow: "glow 2s ease-in-out infinite",
         "spin-slow": "spin 3s linear infinite",
+
+        // EventSync animations
+        float: "float linear infinite",
+        bgShift: "bgShift 12s ease-in-out infinite alternate",
+        pulseLive: "pulseLive 1.5s ease-in-out infinite",
+        slideDown: "slideDown 0.6s ease both",
+        slideIn: "slideIn 0.4s ease",
+        gradientFlow: "gradientFlow 4s ease infinite alternate",
+        fadeUp: "fadeUp 0.8s ease both",
       },
 
       keyframes: {
@@ -109,49 +136,76 @@ const config: Config = {
           "0%, 100%": { textShadow: "0 0 10px rgba(255,198,0,0.5)" },
           "50%": { textShadow: "0 0 20px rgba(255,198,0,0.8)" },
         },
+        // EventSync keyframes
+        float: {
+          "0%": { transform: "translateY(100vh) translateX(0)", opacity: "0" },
+          "10%": { opacity: "0.6" },
+          "90%": { opacity: "0.2" },
+          "100%": { transform: "translateY(-100px) translateX(40px)", opacity: "0" },
+        },
+        bgShift: {
+          "0%": { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0.7", transform: "scale(1.05)" },
+        },
+        pulseLive: {
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(34,197,94,0.6)" },
+          "50%": { boxShadow: "0 0 0 6px rgba(34,197,94,0)" },
+        },
+        gradientFlow: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "100%": { backgroundPosition: "100% 50%" },
+        },
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
 
+      /* ─── BACKGROUNDS ─── */
       backgroundImage: {
         "gradient-primary": "linear-gradient(135deg, #ffc600 0%, #ff005d 100%)",
-        "gradient-secondary":
-          "linear-gradient(135deg, #0088ff 0%, #ffc600 100%)",
+        "gradient-secondary": "linear-gradient(135deg, #0088ff 0%, #ffc600 100%)",
         "gradient-dark": "linear-gradient(135deg, #193549 0%, #15232d 100%)",
-        "hero-pattern":
-          "radial-gradient(circle at 0% 0%, #ffc60010 0%, transparent 50%)",
+        "hero-pattern": "radial-gradient(circle at 0% 0%, #ffc60010 0%, transparent 50%)",
       },
 
+      /* ─── SHADOWS ─── */
       boxShadow: {
         "glow-sm": "0 0 10px rgba(255,198,0,0.3)",
         "glow-md": "0 0 20px rgba(255,198,0,0.4)",
         "glow-lg": "0 0 30px rgba(255,198,0,0.5)",
         card: "0 10px 40px rgba(0,0,0,0.2)",
         "card-hover": "0 20px 50px rgba(0,0,0,0.3)",
+        // EventSync shadows
+        "es-glow": "0 0 24px rgba(124,58,237,0.4)",
+        "es-glow-lg": "0 8px 32px rgba(124,58,237,0.4)",
+        "es-glow-hover": "0 16px 48px rgba(124,58,237,0.5)",
       },
 
+      /* ─── RADIUS ─── */
       borderRadius: {
         xl: "1rem",
         "2xl": "1.5rem",
         "3xl": "2rem",
+        es: "16px",
+        "es-sm": "10px",
       },
 
+      /* ─── SPACING ─── */
       spacing: {
         "18": "4.5rem",
         "88": "22rem",
         "128": "32rem",
       },
 
-      fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Poppins", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-      },
-
+      /* ─── FONT SIZE ─── */
       fontSize: {
         xxs: "0.625rem",
         "2.5xl": "1.75rem",
         "3.5xl": "2rem",
       },
 
+      /* ─── CONTAINER ─── */
       container: {
         center: true,
         padding: {
@@ -163,7 +217,7 @@ const config: Config = {
         },
       },
 
-      // Backdrop blur
+      /* ─── BACKDROP BLUR ─── */
       backdropBlur: {
         xs: "2px",
       },
