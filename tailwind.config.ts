@@ -1,3 +1,7 @@
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
+import aspectRatio from '@tailwindcss/aspect-ratio'
+
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -157,9 +161,9 @@ const config: Config = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
+    forms,
+    typography,
+    aspectRatio,
   ],
 };
 
