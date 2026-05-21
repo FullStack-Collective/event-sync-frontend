@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback, createContext, useContext } from "react";
+import {
+  type ReactNode,
+  useState,
+  useEffect,
+  useCallback,
+  createContext,
+  useContext,
+} from "react";
 import { authApi } from "@/lib/api";
 import { AuthUser } from "@/types";
 
@@ -15,7 +22,11 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -56,8 +67,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       localStorage.setItem("token", token);
       setUser(user);
-    } catch (err: any) {
-      setError(err.message || "Échec de la connexion");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message || "Échec de la connexion");
       throw err;
     } finally {
       setIsLoading(false);
