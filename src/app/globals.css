@@ -2,143 +2,160 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════
+   EventSync — Global Styles
+   Compatible avec votre tailwind.config.ts
+   ═══════════════════════════════════════════ */
+
 @layer base {
   :root {
-    --primary: #ffc600;
-    --secondary: #0088ff;
-    --accent: #ff005d;
-    --background: #193549;
-    --foreground: #ffffff;
-    --surface: #15232d;
+    /* EventSync Core Colors (CSS Variables pour référence JS) */
+    --es-bg: #06060f;
+    --es-bg2: #0d0d1e;
+    --es-bg3: #111128;
+    --es-violet: #7c3aed;
+    --es-violet-light: #a855f7;
+    --es-cyan: #06b6d4;
+    --es-cyan-light: #67e8f9;
+    --es-pink: #ec4899;
+    --es-gold: #f59e0b;
+    --es-text: #f1f0ff;
+    --es-text-muted: #8b8aaa;
+    --es-text-dim: #4a4a6a;
+    --es-border: rgba(124, 58, 237, 0.18);
+    --es-border-light: rgba(255, 255, 255, 0.06);
+    --es-live: #22c55e;
+    --es-radius: 16px;
+    --es-radius-sm: 10px;
   }
 
-  * {
-    @apply border-border;
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    background: var(--es-bg);
+    color: var(--es-text);
+    font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.3);
+    color: var(--es-text);
+  }
+}
+
+/* ─── Scrollbar ─── */
+@layer base {
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-surface rounded-full;
+    background: var(--es-bg);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary rounded-full hover:bg-primary-600;
+    background: rgba(124, 58, 237, 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 58, 237, 0.5);
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-primary text-background font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-primary-600 
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
-
-  .btn-secondary {
-    @apply bg-secondary text-white font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-secondary-600 
-           focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
-  }
-
-  .btn-accent {
-    @apply bg-accent text-white font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-accent-600 
-           focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
-  }
-
-  .btn-outline {
-    @apply border-2 border-primary text-primary font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-primary hover:text-background 
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
-
-  .card {
-    @apply bg-surface rounded-xl shadow-card transition-all duration-300 
-           hover:shadow-card-hover hover:-translate-y-1;
-  }
-
-  .card-header {
-    @apply p-6 border-b border-border;
-  }
-
-  .card-body {
-    @apply p-6;
-  }
-
-  .card-footer {
-    @apply p-6 border-t border-border;
-  }
-
-  .badge-primary {
-    @apply bg-primary/20 text-primary px-2 py-1 rounded-full text-xs font-semibold;
-  }
-
-  .badge-secondary {
-    @apply bg-secondary/20 text-secondary px-2 py-1 rounded-full text-xs font-semibold;
-  }
-
-  .badge-accent {
-    @apply bg-accent/20 text-accent px-2 py-1 rounded-full text-xs font-semibold;
-  }
-
-  .badge-live {
-    @apply bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold 
-           animate-pulse;
-  }
-
-  .input {
-    @apply bg-surface border border-border rounded-lg px-4 py-2 
-           text-foreground placeholder-muted
-           focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
-           transition-all duration-200;
-  }
-
-  .nav-link {
-    @apply text-muted hover:text-primary transition-colors duration-200;
-  }
-
-  .nav-link-active {
-    @apply text-primary font-semibold;
-  }
-
-  .skeleton {
-    @apply bg-surface animate-pulse rounded-lg;
-  }
-}
-
+/* ─── Animations ─── */
 @layer utilities {
-  .text-gradient-primary {
-    @apply bg-gradient-primary bg-clip-text text-transparent;
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-100px) translateX(40px); opacity: 0; }
   }
 
-  .glow-primary {
-    @apply shadow-glow-sm;
+  @keyframes bgShift {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.7; transform: scale(1.05); }
   }
 
-  .animation-delay-100 {
-    animation-delay: 100ms;
+  @keyframes pulseLive {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
   }
-  .animation-delay-200 {
-    animation-delay: 200ms;
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
-  .animation-delay-300 {
-    animation-delay: 300ms;
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .animation-delay-500 {
-    animation-delay: 500ms;
+
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
   }
-  .animation-delay-700 {
-    animation-delay: 700ms;
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .animation-delay-1000 {
-    animation-delay: 1000ms;
+
+  .animate-float {
+    animation: float linear infinite;
+  }
+
+  .animate-bgShift {
+    animation: bgShift 12s ease-in-out infinite alternate;
+  }
+
+  .animate-pulseLive {
+    animation: pulseLive 1.5s ease-in-out infinite;
+  }
+
+  .animate-slideDown {
+    animation: slideDown 0.6s ease both;
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.4s ease;
+  }
+
+  .animate-gradientFlow {
+    background-size: 200%;
+    animation: gradientFlow 4s ease infinite alternate;
+  }
+
+  .animate-fadeUp {
+    animation: fadeUp 0.8s ease both;
+  }
+}
+
+/* ─── Text Gradients ─── */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--es-violet-light) 0%, var(--es-cyan) 50%, var(--es-pink) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-subtle {
+    background: linear-gradient(135deg, var(--es-text), var(--es-violet-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
