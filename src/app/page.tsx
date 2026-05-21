@@ -13,37 +13,37 @@
 // import { FavoritesSection } from "@/components/sections/FavoritesSection";
 // import { FeaturesSection } from "@/components/sections/FeaturesSection";
 
-export default function Home() {
-  return (
-    <div className="min-h-screen bg-es-bg text-es-text font-sans">
-      <AnimatedBackground />
-      <Particles />
+// export default function Home() {
+//   return (
+//     <div className="min-h-screen bg-es-bg text-es-text font-sans">
+//       <AnimatedBackground />
+//       <Particles />
 
-      <Navbar />
+//       <Navbar />
 
-      <main>
-        <HeroSection />
-        <SectionDivider />
+//       <main>
+//         <HeroSection />
+//         <SectionDivider />
 
-        <EventsSection />
-        <SectionDivider />
+//         <EventsSection />
+//         <SectionDivider />
 
-        <ScheduleSection />
-        <SectionDivider />
+//         <ScheduleSection />
+//         <SectionDivider />
 
-        <SessionDetailSection />
-        <SectionDivider />
+//         <SessionDetailSection />
+//         <SectionDivider />
 
-        <SpeakersSection />
-        <SectionDivider />
+//         <SpeakersSection />
+//         <SectionDivider />
 
-        <FavoritesSection />
-        <SectionDivider />
+//         <FavoritesSection />
+//         <SectionDivider />
 
-        <FeaturesSection />
-      </main>
+//         <FeaturesSection />
+//       </main>
 
-      <Footer />
-    </div>
-  );
-}
+//       <Footer />
+//     </div>
+//   );
+// }
