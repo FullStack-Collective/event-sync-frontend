@@ -5,6 +5,16 @@
 import { ENDPOINTS } from "./constants";
 import { ApiResponse, Event, Session, Speaker, Room, Question, LoginResponse, VerifyResponse } from "@/types";
 
+// Remplacement de `any` par un type explicite pour respecter eslint@typescript-eslint/no-explicit-any
+// La pagination peut contenir des champs numériques standards, et d'autres clés éventuelles.
+type Pagination = {
+  page?: number;
+  limit?: number;
+  total?: number;
+  totalPages?: number;
+  [key: string]: unknown;
+};
+
 class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -72,7 +82,7 @@ export const eventApi = {
     if (params?.status) query.set("status", params.status);
     
     const url = `${ENDPOINTS.events.list}?${query.toString()}`;
-    return fetcher<ApiResponse<{ data: Event[]; pagination: any }>>(url);
+    return fetcher<ApiResponse<{ data: Event[]; pagination: Pagination }>>(url);
   },
 
   getUpcoming: (limit?: number) => {
@@ -113,8 +123,9 @@ export const speakerApi = {
   getById: (id: number) =>
     fetcher<ApiResponse<Speaker>>(ENDPOINTS.speakers.detail(id)),
 
+  // Le endpoint des sessions du speaker retourne des objets de session.
   getSessions: (id: number) =>
-    fetcher<ApiResponse<any[]>>(ENDPOINTS.speakers.sessions(id)),
+    fetcher<ApiResponse<Session[]>>(ENDPOINTS.speakers.sessions(id)),
 };
 
 // ═══════════════════════════════════════════════════════════════
