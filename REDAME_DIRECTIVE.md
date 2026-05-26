@@ -28,7 +28,7 @@ La zone publique ne requiert aucune authentification. Les tâches sont répartie
 
 ### 👤 Répartition de l'Équipe
 
-#### EVENT : Module Événements & Layouts Publics
+#### VALISOA : Module Événements & Layouts Publics
 * Création du Layout Public global (Navbar + Footer).
 * Page d'accueil (`/`) et catalogue de recherche des événements (`/events`).
 * Implémentation du service `event.service.ts` et des schémas de données associés.
