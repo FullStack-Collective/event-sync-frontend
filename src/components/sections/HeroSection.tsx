@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { LiveBadge } from "@/components/ui/LiveBadge";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { useEvents } from "@/hooks/useEvents";
@@ -12,13 +12,23 @@ export function HeroSection() {
   const { counts, animate } = useCounterAnimation();
   const { events, isLoading } = useEvents({ limit: 10 });
 
-  // Calcul des stats depuis le backend
-  const stats = {
-    events: events.length || 12,
-    sessions: events.reduce((acc, e) => acc + (e.totalSessions || 0), 0) || 148,
-    speakers: 64, // À remplacer par un appel API dédié
-    live: events.filter((e) => e.isLive).length || 3,
-  };
+  // Calcul des stats depuis le backend (memoisé pour éviter recréation à chaque render)
+  const stats = useMemo(() => {
+    const eventsCount = events.length;
+    const sessionsCount = events.reduce(
+      (acc, e) => acc + (e.totalSessions || 0),
+      0,
+    );
+    const speakersCount = 64; // À remplacer par un appel API dédié
+    const liveCount = events.filter((e) => e.isLive).length;
+
+    return {
+      events: eventsCount || 12,
+      sessions: sessionsCount || 148,
+      speakers: speakersCount,
+      live: liveCount || 3,
+    } as const;
+  }, [events]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,7 +47,7 @@ export function HeroSection() {
     return () => observer.disconnect();
   }, [countersStarted, animate, stats]);
 
-  const displayStats = [
+  const displayStats: { key: keyof typeof stats; label: string }[] = [
     { key: "events", label: "Événements actifs" },
     { key: "sessions", label: "Sessions planifiées" },
     { key: "speakers", label: "Intervenants" },
