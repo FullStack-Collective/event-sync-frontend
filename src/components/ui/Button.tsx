@@ -1,7 +1,7 @@
 'use client';
 
 import { ButtonHTMLAttributes, FC } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/format-date';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'ghost';
