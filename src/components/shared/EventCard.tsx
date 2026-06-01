@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Calendar, MapPin, MessageCircle, Users } from 'lucide-react';
-import { Event } from '@/types/event.types';
+import { Event } from '@/types/event';
 import { cn, formatDate } from '@/shared/utils/format-date';
 
 interface EventCardProps {
