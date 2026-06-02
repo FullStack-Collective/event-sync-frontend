@@ -1,21 +1,25 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
-import { EventCard } from '@/components/shared/EventCard';
-import { eventService } from '@/modules/events';
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { EventCard } from "@/components/shared/EventCard";
+import { eventService } from "@/modules/events";
+import { Event } from "@/types/event";
+
+
+
 export default async function HomePage() {
-  let upcomingEvents: any[] = [];
+  let upcomingEvents: Event[] = [];
   try {
     const response = await eventService.getUpcoming(3);
     upcomingEvents = response.data || [];
   } catch (error) {
-    console.error('Erreur lors du chargement des événements:', error);
+    console.error("Erreur lors du chargement des événements:", error);
   }
 
   return (
     <div>
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-primary opacity-10 animate-bgShift"></div>
-        
+
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 animate-fade-up">
             <span className="bg-gradient-primary bg-clip-text text-transparent ">
@@ -23,7 +27,8 @@ export default async function HomePage() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-es-text-muted mb-8 max-w-2xl mx-auto animate-fade-up animation-delay-200">
-            La plateforme moderne pour gérer vos événements et interagir avec vos participants en temps réel
+            La plateforme moderne pour gérer vos événements et interagir avec
+            vos participants en temps réel
           </p>
           <div className="flex justify-center gap-4 animate-fade-up animation-delay-400">
             <Link href="/events">
@@ -59,7 +64,8 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-es-text mb-4">
-              Pourquoi choisir <span className="text-es-violet">EventSync</span> ?
+              Pourquoi choisir <span className="text-es-violet">EventSync</span>{" "}
+              ?
             </h2>
             <p className="text-es-text-muted max-w-2xl mx-auto">
               Une plateforme complète pour vos événements
@@ -124,16 +130,18 @@ const features = [
   {
     icon: "📅",
     title: "Planning Multi-Track",
-    description: "Visualisez toutes les sessions en parallèle par salle et horaire"
+    description:
+      "Visualisez toutes les sessions en parallèle par salle et horaire",
   },
   {
     icon: "💬",
     title: "Q/R en direct",
-    description: "Interagissez avec les intervenants via notre système de questions"
+    description:
+      "Interagissez avec les intervenants via notre système de questions",
   },
   {
     icon: "⭐",
     title: "Sessions favorites",
-    description: "Créez votre agenda personnel et ne manquez aucune session"
-  }
+    description: "Créez votre agenda personnel et ne manquez aucune session",
+  },
 ];

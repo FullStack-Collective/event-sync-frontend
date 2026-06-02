@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/config/api.config';
-import { Event, EventListResponse, EventListResponseSchema } from '@/types/event';
+import { Event, EventListResponse } from '@/types/event';
 
 export interface GetEventsParams {
   page?: number;
@@ -23,26 +23,29 @@ export const eventService = {
     if (params.sortOrder) queryParams.append('sortOrder', params.sortOrder);
     
     const url = `/api/events${queryParams.toString() ? `?${queryParams}` : ''}`;
-    const response = await apiClient.get(url);
-    
-     return {
-      success: response.success,
-      data: response.data,
-      pagination: response.pagination
-    };
+    const response = await apiClient.get<EventListResponse>(url);
+
+    return response;
   },
 
 
   getById: async (id: number): Promise<{ success: boolean; data: Event }> => {
-    return apiClient.get(`/api/events/${id}`);
+    return apiClient.get<{ success: boolean; data: Event }>(`/api/events/${id}`);
   },
 
  
   getUpcoming: async (limit: number = 5): Promise<{ success: boolean; data: Event[]; count: number }> => {
-    return apiClient.get(`/api/events/upcoming?limit=${limit}`);
+    return apiClient.get<{ success: boolean; data: Event[]; count: number }>(`/api/events/upcoming?limit=${limit}`);
   },
  
-  getCurrentLive: async (eventId: number): Promise<{ success: boolean; data: any; isLive?: boolean; message?: string }> => {
-    return apiClient.get(`/api/events/${eventId}/live`);
+  getCurrentLive: async (eventId: number): Promise<EventCurrentLiveResponse> => {
+    return apiClient.get<EventCurrentLiveResponse>(`/api/events/${eventId}/live`);
   },
 };
+
+export interface EventCurrentLiveResponse {
+  success: boolean;
+  data: Record<string, unknown> | null;
+  isLive?: boolean;
+  message?: string;
+}

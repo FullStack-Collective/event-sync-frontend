@@ -1,7 +1,11 @@
-import axios, { AxiosInstance, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosError } from "axios";
 
 // Configuration de base
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const rawApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim() || "";
+const normalizedApiUrl = rawApiUrl.replace(/\/+$/, "");
+const API_URL = normalizedApiUrl.endsWith("/api")
+  ? normalizedApiUrl.slice(0, -4)
+  : normalizedApiUrl || "http://127.0.0.1:5000";
 
 class ApiClient {
   private client: AxiosInstance;
@@ -10,15 +14,15 @@ class ApiClient {
     this.client = axios.create({
       baseURL: API_URL,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       timeout: 10000,
     });
 
     // Intercepteur pour ajouter le token
     this.client.interceptors.request.use((config) => {
-      if (typeof window !== 'undefined') {
-        const token = localStorage.getItem('auth_token');
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("auth_token");
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -31,13 +35,13 @@ class ApiClient {
       (response) => response,
       (error: AxiosError) => {
         if (error.response?.status === 401) {
-          if (typeof window !== 'undefined') {
-            localStorage.removeItem('auth_token');
-            window.location.href = '/admin/login';
+          if (typeof window !== "undefined") {
+            localStorage.removeItem("auth_token");
+            window.location.href = "/admin/login";
           }
         }
         return Promise.reject(error);
-      }
+      },
     );
   }
 
