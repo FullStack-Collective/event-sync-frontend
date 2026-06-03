@@ -1,144 +1,231 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --primary: #ffc600;
-    --secondary: #0088ff;
-    --accent: #ff005d;
-    --background: #193549;
-    --foreground: #ffffff;
-    --surface: #15232d;
+@theme {
+  /* ─── FONTS ─── */
+  --font-sans: var(--font-dm-sans), "system-ui", "sans-serif";
+  --font-display: var(--font-syne), "system-ui", "sans-serif";
+  --font-mono: var(--font-jetbrains-mono), "monospace";
+
+  /* ─── COLORS ─── */
+  --color-es-bg: #06060f;
+  --color-es-bg2: #0d0d1e;
+  --color-es-bg3: #111128;
+  --color-es-violet: #7c3aed;
+  --color-es-violet-light: #a855f7;
+  --color-es-cyan: #06b6d4;
+  --color-es-cyan-light: #67e8f9;
+  --color-es-pink: #ec4899;
+  --color-es-gold: #f59e0b;
+  --color-es-text: #f1f0ff;
+  --color-es-text-muted: #8b8aaa;
+  --color-es-text-dim: #4a4a6a;
+  --color-es-live: #22c55e;
+
+  --color-primary: #ffc600;
+  --color-secondary: #0088ff;
+  --color-accent: #ff005d;
+  --color-background: #193549;
+  --color-foreground: #ffffff;
+  --color-surface: #15232d;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-muted: rgba(255, 255, 255, 0.4);
+
+  --color-palette-1: #ffc600;
+  --color-palette-2: #0088ff;
+  --color-palette-3: #ff005d;
+  --color-palette-4: #ffffff;
+  --color-palette-5: #193549;
+  --color-palette-6: #15232d;
+
+  --color-primary-50: #fff9e6;
+  --color-primary-100: #fff0cc;
+  --color-primary-200: #ffe199;
+  --color-primary-300: #ffd266;
+  --color-primary-400: #ffc333;
+  --color-primary-500: #ffc600;
+  --color-primary-600: #e6b200;
+  --color-primary-700: #cc9e00;
+  --color-primary-800: #b38b00;
+  --color-primary-900: #997700;
+
+  --color-secondary-50: #e6f3ff;
+  --color-secondary-100: #cce7ff;
+  --color-secondary-200: #99ceff;
+  --color-secondary-300: #66b6ff;
+  --color-secondary-400: #339dff;
+  --color-secondary-500: #0088ff;
+  --color-secondary-600: #0070cc;
+  --color-secondary-700: #005899;
+  --color-secondary-800: #004066;
+  --color-secondary-900: #002833;
+
+  --color-accent-50: #ffe6f0;
+  --color-accent-100: #ffcce1;
+  --color-accent-200: #ff99c2;
+  --color-accent-300: #ff66a3;
+  --color-accent-400: #ff3385;
+  --color-accent-500: #ff005d;
+  --color-accent-600: #cc004a;
+  --color-accent-700: #990037;
+  --color-accent-800: #660024;
+  --color-accent-900: #330012;
+
+  --color-bg-dark: #193549;
+  --color-bg-darker: #15232d;
+  --color-bg-card: #1f3d52;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* ─── GRADIENTS & BACKGROUNDS ─── */
+  --background-image-gradient-primary: linear-gradient(135deg, #ffc600 0%, #ff005d 100%);
+  --background-image-gradient-secondary: linear-gradient(135deg, #0088ff 0%, #ffc600 100%);
+  --background-image-gradient-dark: linear-gradient(135deg, #193549 0%, #15232d 100%);
+  --background-image-hero-pattern: radial-gradient(circle at 0% 0%, rgba(255, 198, 0, 0.1) 0%, transparent 50%);
+
+  /* ─── RADIUS ─── */
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-es: 16px;
+  --radius-es-sm: 10px;
+
+  /* ─── SPACING ─── */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  --spacing-128: 32rem;
+
+  /* ─── FONT SIZES ─── */
+  --font-size-xxs: 0.625rem;
+  --font-size-2\.5xl: 1.75rem;
+  --font-size-3\.5xl: 2rem;
+
+  /* ─── ANIMATIONS & KEYFRAMES ─── */
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-bounce-slow: bounce 2s infinite;
+  --animate-slide-up: slideUp 0.3s ease-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-fade-in: fadeIn 0.3s ease-in;
+  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-spin-slow: spin 3s linear infinite;
+  --animate-float: float 8s linear infinite;
+  --animate-bg-shift: bgShift 12s ease-in-out infinite alternate;
+  --animate-pulse-live: pulseLive 1.5s ease-in-out infinite;
+  --animate-slide-in: slideIn 0.4s ease;
+  --animate-gradient-flow: gradientFlow 4s ease infinite alternate;
+  --animate-fade-up: fadeUp 0.8s ease both;
+
+  @keyframes slideUp {
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideDown {
+    0% { transform: translateY(-10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 10px rgba(255,198,0,0.5); }
+    50% { text-shadow: 0 0 20px rgba(255,198,0,0.8); }
+  }
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-100px) translateX(40px); opacity: 0; }
+  }
+  @keyframes bgShift {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.7; transform: scale(1.05); }
+  }
+  @keyframes pulseLive {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-surface rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-primary rounded-full hover:bg-primary-600;
-  }
+  /* ─── SHADOWS ─── */
+  --shadow-glow-sm: 0 0 10px rgba(255,198,0,0.3);
+  --shadow-glow-md: 0 0 20px rgba(255,198,0,0.4);
+  --shadow-glow-lg: 0 0 30px rgba(255,198,0,0.5);
+  --shadow-card: 0 10px 40px rgba(0,0,0,0.2);
+  --shadow-card-hover: 0 20px 50px rgba(0,0,0,0.3);
+  --shadow-es-glow: 0 0 24px rgba(124,58,237,0.4);
+  --shadow-es-glow-lg: 0 8px 32px rgba(124,58,237,0.4);
+  --shadow-es-glow-hover: 0 16px 48px rgba(124,58,237,0.5);
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-primary text-background font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-primary-600 
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
-
-  .btn-secondary {
-    @apply bg-secondary text-white font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-secondary-600 
-           focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
-  }
-
-  .btn-accent {
-    @apply bg-accent text-white font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-accent-600 
-           focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
-  }
-
-  .btn-outline {
-    @apply border-2 border-primary text-primary font-semibold py-2 px-4 rounded-lg 
-           transition-all duration-200 hover:bg-primary hover:text-background 
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
-
-  .card {
-    @apply bg-surface rounded-xl shadow-card transition-all duration-300 
-           hover:shadow-card-hover hover:-translate-y-1;
-  }
-
-  .card-header {
-    @apply p-6 border-b border-border;
-  }
-
-  .card-body {
-    @apply p-6;
-  }
-
-  .card-footer {
-    @apply p-6 border-t border-border;
-  }
-
-  .badge-primary {
-    @apply bg-primary/20 text-primary px-2 py-1 rounded-full text-xs font-semibold;
-  }
-
-  .badge-secondary {
-    @apply bg-secondary/20 text-secondary px-2 py-1 rounded-full text-xs font-semibold;
-  }
-
-  .badge-accent {
-    @apply bg-accent/20 text-accent px-2 py-1 rounded-full text-xs font-semibold;
-  }
-
-  .badge-live {
-    @apply bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold 
-           animate-pulse;
-  }
-
-  .input {
-    @apply bg-surface border border-border rounded-lg px-4 py-2 
-           text-foreground placeholder-muted
-           focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
-           transition-all duration-200;
-  }
-
-  .nav-link {
-    @apply text-muted hover:text-primary transition-colors duration-200;
-  }
-
-  .nav-link-active {
-    @apply text-primary font-semibold;
-  }
-
-  .skeleton {
-    @apply bg-surface animate-pulse rounded-lg;
-  }
+/* ═══════════════════════════════════════════
+   STYLES GLOBAUX & UTILITIES
+   ═══════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
-@layer utilities {
-  .text-gradient-primary {
-    @apply bg-gradient-primary bg-clip-text text-transparent;
-  }
-
-  .glow-primary {
-    @apply shadow-glow-sm;
-  }
-
-  .animation-delay-100 {
-    animation-delay: 100ms;
-  }
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
-  .animation-delay-300 {
-    animation-delay: 300ms;
-  }
-  .animation-delay-500 {
-    animation-delay: 500ms;
-  }
-  .animation-delay-700 {
-    animation-delay: 700ms;
-  }
-  .animation-delay-1000 {
-    animation-delay: 1000ms;
-  }
+body {
+  background: var(--color-es-bg);
+  color: var(--color-es-text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: var(--color-es-text);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-es-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.5);
+}
+
+/* ─── Text Gradients Utilities ─── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-es-violet-light) 0%, var(--color-es-cyan) 50%, var(--color-es-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-subtle {
+  background: linear-gradient(135deg, var(--color-es-text), var(--color-es-violet-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.animate-gradient-flow {
+  background-size: 200%;
+}
+
+
