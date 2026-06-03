@@ -7,9 +7,9 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
  */
 export class APIError extends Error {
   status: number;
-  payload: any;
+  payload: unknown;
 
-  constructor(message: string, status: number, payload: any = null) {
+  constructor(message: string, status: number, payload: unknown = null) {
     super(message);
     this.name = 'APIError';
     this.status = status;
@@ -95,8 +95,8 @@ export async function apiFetch<T>(
     }
 
     return rawData as T;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof APIError) throw error;
-    throw new APIError(`Erreur réseau : ${error.message}`, 503);
+    throw new APIError(`Erreur réseau : ${ (error as Error).message }`, 503);
   }
 }
