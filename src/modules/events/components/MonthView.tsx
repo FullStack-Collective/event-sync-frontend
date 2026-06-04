@@ -66,14 +66,14 @@ export const MonthView = ({ events, currentMonth }: MonthViewProps) => {
   };
 
   return (
-    <div className="w-full rounded-xl overflow-hidden border-[1.5px] border-clay animate-[fadeUp_.4s_cubic-bezier(.2,.9,.4,1)_both]">
+    <div className="w-full rounded-xs overflow-hidden border-[1.5px] border-clay animate-[fadeUp_.4s_cubic-bezier(.2,.9,.4,1)_both] bg-gray-100">
       {/* En-têtes */}
-      <div className="grid grid-cols-7 bg-warm-white border-b-[1.5px] border-clay">
+      <div className="grid grid-cols-7 bg-gray-400 border-b-[1.5px] border-gray-400">
         {DAY_NAMES.map((d, i) => (
           <div
             key={d}
-            className={`py-2.5 text-center text-[11px] font-bold tracking-widest uppercase ${
-              i >= 5 ? 'text-sage-500' : 'text-sage-300'
+            className={`py-2.5 text-center  text-[11px] font-bold tracking-widest uppercase ${
+              i >= 5 ? 'text-sage-500' : 'text-mint-800'
             }`}
           >
             {d}
@@ -82,7 +82,7 @@ export const MonthView = ({ events, currentMonth }: MonthViewProps) => {
       </div>
 
       {/* Grille */}
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 ">
         {cells.map((date, idx) => {
           const isToday = date?.toDateString() === todayStr;
           const dayEvents = date ? getEventsForDay(date) : [];
@@ -91,9 +91,9 @@ export const MonthView = ({ events, currentMonth }: MonthViewProps) => {
             <div
               key={idx}
               className={[
-                'min-h-[100px] p-1.5 border-r border-b border-clay last:border-r-0 transition-colors duration-150',
-                !date ? 'bg-stone/60' : isToday ? 'bg-sage-50' : 'bg-warm-white hover:bg-sage-50/50',
-                isToday ? 'outline outline-2 outline-sage-500 outline-offset-[-2px]' : '',
+                'min-h-[100px]  p-1.5 border-r border-b border-white last:border-r-0 transition-colors duration-150',
+                !date ? 'bg-stone/60' : isToday ? 'bg-gray-200' : 'bg-gray-300 hover:bg-sage-50/50',
+                isToday ? ' outline-sage-500 outline-offset-[-2px]' : '',
               ].join(' ')}
             >
               {date && (
