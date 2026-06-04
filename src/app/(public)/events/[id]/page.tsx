@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import { eventService } from '@/modules/events/services/event.service';
-import { Calendar, MapPin, Clock, Users } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users} from 'lucide-react';
 
- const formatDate = (dateString: string) => {
+const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('fr-FR', {
     weekday: 'long',
@@ -47,9 +47,9 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     const event = response.data;
     
     return (
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container-custom p-8 max-w-4xl">
         {event.bannerUrl && (
-          <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-8">
+          <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-8 card-hover">
             <img
               src={event.bannerUrl}
               alt={event.title}
@@ -58,85 +58,86 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
           </div>
         )}
         
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-4 flex-wrap">
           {event.isLive && (
-            <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-semibold animate-pulse">
-              🔴 EN DIRECT
+            <span className="live-badge">
+              EN DIRECT
             </span>
           )}
           {event.isUpcoming && !event.isLive && (
-            <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm font-semibold">
+            <span className="inline-block px-3 py-1 bg-warning/20 text-warning rounded-full text-sm font-semibold">
               📅 À VENIR
             </span>
           )}
           {event.isPast && (
-            <span className="px-3 py-1 bg-gray-500/20 text-gray-400 rounded-full text-sm font-semibold">
+            <span className="inline-block px-3 py-1 bg-text-muted/20 text-text-muted rounded-full text-sm font-semibold">
               ✅ PASSÉ
             </span>
           )}
         </div>
         
-        <h1 className="text-3xl md:text-5xl font-bold text-es-text mb-4">
+        <h1 className="text-3xl md:text-5xl font-bold text-text mb-4">
           {event.title}
         </h1>
         
         {event.description && (
-          <div className="bg-[#111128] rounded-2xl p-6 mb-8">
-            <h2 className="text-xl font-semibold text-es-text mb-3">Description</h2>
-            <p className="text-es-text-muted leading-relaxed">
+          <div className="card p-6 mb-8">
+            <h2 className="text-xl font-semibold text-text mb-3">Description</h2>
+            <p className="text-text-muted leading-relaxed">
               {event.description}
             </p>
           </div>
         )}
         
+        {/* Informations pratiques */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <div className="bg-[#111128] rounded-2xl p-4 flex items-center gap-3">
-            <Calendar className="w-5 h-5 text-[#7c3aed]" />
+          <div className="card p-4 flex items-center gap-3">
+            <Calendar className="w-5 h-5 text-primary" />
             <div>
-              <p className="text-sm text-es-text-muted">Date</p>
-              <p className="text-es-text font-medium">{formatDate(event.startDate)}</p>
+              <p className="text-sm text-text-muted">Date</p>
+              <p className="text-text font-medium">{formatDate(event.startDate)}</p>
             </div>
           </div>
           
-          <div className="bg-[#111128] rounded-2xl p-4 flex items-center gap-3">
-            <Clock className="w-5 h-5 text-[#7c3aed]" />
+          <div className="card p-4 flex items-center gap-3">
+            <Clock className="w-5 h-5 text-primary" />
             <div>
-              <p className="text-sm text-es-text-muted">Horaire</p>
-              <p className="text-es-text font-medium">
+              <p className="text-sm text-text-muted">Horaire</p>
+              <p className="text-text font-medium">
                 {formatTime(event.startDate)} - {formatTime(event.endDate)}
               </p>
             </div>
           </div>
           
           {event.location && (
-            <div className="bg-[#111128] rounded-2xl p-4 flex items-center gap-3">
-              <MapPin className="w-5 h-5 text-[#7c3aed]" />
+            <div className="card p-4 flex items-center gap-3">
+              <MapPin className="w-5 h-5 text-primary" />
               <div>
-                <p className="text-sm text-es-text-muted">Lieu</p>
-                <p className="text-es-text font-medium">{event.location}</p>
+                <p className="text-sm text-text-muted">Lieu</p>
+                <p className="text-text font-medium">{event.location}</p>
               </div>
             </div>
           )}
           
-          <div className="bg-[#111128] rounded-2xl p-4 flex items-center gap-3">
-            <Users className="w-5 h-5 text-[#7c3aed]" />
+          <div className="card p-4 flex items-center gap-3">
+            <Users className="w-5 h-5 text-primary" />
             <div>
-              <p className="text-sm text-es-text-muted">Durée</p>
-              <p className="text-es-text font-medium">{getDuration(event.startDate, event.endDate)}</p>
+              <p className="text-sm text-text-muted">Durée</p>
+              <p className="text-text font-medium">{getDuration(event.startDate, event.endDate)}</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-[#111128] rounded-2xl p-6">
-          <h2 className="text-xl font-semibold text-es-text mb-4">Statistiques</h2>
+        <div className="card p-6">
+          <h2 className="text-xl font-semibold text-text mb-4">Statistiques</h2>
           <div className="flex justify-around text-center">
             <div>
-              <p className="text-2xl font-bold text-[#7c3aed]">{event.totalSessions}</p>
-              <p className="text-sm text-es-text-muted">Sessions</p>
+              <p className="text-2xl font-bold text-primary">{event.totalSessions}</p>
+              <p className="text-sm text-text-muted">Sessions</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-[#7c3aed]">{event.totalQuestions}</p>
-              <p className="text-sm text-es-text-muted">Questions</p>
+              <p className="text-2xl font-bold text-primary">{event.totalQuestions}</p>
+              <p className="text-sm text-text-muted">Questions</p>
             </div>
           </div>
         </div>
