@@ -50,7 +50,7 @@ export function HeroSection() {
           </div>
 
           {/* Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 animate-fade-up animation-delay-100">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 animate-fade-up animation-delay-100">
             Manage your events
             <br />
             <span className="text-gradient-primary">in real-time</span>
