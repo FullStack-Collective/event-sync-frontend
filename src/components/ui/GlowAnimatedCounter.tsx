@@ -47,10 +47,10 @@ export function GlowAnimatedCounter({
 
   return (
     <div ref={ref} className="relative inline-block">
-      <div className="text-3xl font-bold bg-gradient-sage bg-clip-text text-transparent animate-sage-glow">
+      <div className="text-3xl font-bold text-white animate-sage-glow py-1 px-4 rounded-lg">
         {formatValue()}
       </div>
-      <div className="absolute inset-0 blur-xl bg-gradient-sage opacity-20 -z-10" />
+      <div className="absolute inset-0 blur-xl opacity-20 -z-10" />
     </div>
   );
 }

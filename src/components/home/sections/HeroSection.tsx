@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { useEffect, useRef } from "react";
 import { ArrowRight, Calendar, Users, Zap } from "lucide-react";
+import { GlowAnimatedCounter } from "@/components/ui/GlowAnimatedCounter";
 
 export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -76,16 +77,18 @@ export function HeroSection() {
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 border-t border-border animate-fade-up animation-delay-400">
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary">50+</div>
-              <div className="text-text-muted text-sm mt-1">Events Organized</div>
+              <GlowAnimatedCounter targetValue={50} suffix="+" duration={2000} />
+              <div className="text-text-muted text-sm mt-2">Events Organized</div>
             </div>
+            
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary">10k+</div>
-              <div className="text-text-muted text-sm mt-1">Active Participants</div>
+              <GlowAnimatedCounter targetValue={10000} suffix="k+" duration={2500} />
+              <div className="text-text-muted text-sm mt-2">Active Participants</div>
             </div>
+            
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary">100+</div>
-              <div className="text-text-muted text-sm mt-1">Expert Speakers</div>
+              <GlowAnimatedCounter targetValue={100} suffix="+" duration={2000} />
+              <div className="text-text-muted text-sm mt-2">Expert Speakers</div>
             </div>
           </div>
         </div>
