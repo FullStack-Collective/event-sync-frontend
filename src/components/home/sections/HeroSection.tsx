@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { useEffect, useRef } from "react";
 import { ArrowRight, Calendar, Users, Zap } from "lucide-react";
@@ -67,9 +68,9 @@ export function HeroSection() {
               Explore Events
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="btn-outline text-lg px-8 py-3">
+            <Link href="#about"  className="btn-outline text-lg px-8 py-3">
               Learn More
-            </button>
+            </Link>
           </div>
 
           {/* Stats */}
