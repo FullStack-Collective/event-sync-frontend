@@ -1,21 +1,20 @@
-import "./globals.css";
-import React from "react";
+import { PublicHeader } from "@/components/layout/PublicHeader";
+import { PublicFooter } from "@/components/layout/PublicFooter";
 
-export const metadata = {
-  title: "EventSync",
-  description: "Gestion d'événements",
-};
-
-export default function RootLayout({
+export default function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
-      <body className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-bg">
+      <PublicHeader />
+      <main className="relative overflow-hidden">
+        {/* Glow effect de fond global */}
+        <div className="fixed inset-0 bg-glow pointer-events-none opacity-40" />
         {children}
-      </body>
-    </html>
+      </main>
+      <PublicFooter />
+    </div>
   );
 }
