@@ -79,23 +79,23 @@ export function HeroSection() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 border-t border-border animate-fade-up animation-delay-400">
             <div className="text-center">
               <GlowAnimatedCounter targetValue={50} suffix="+" duration={2000} />
-              <div className="text-text-muted text-sm mt-2">Events Organized</div>
+              <div className="text-text-muted text-lg mt-2">Events Organized</div>
             </div>
             
             <div className="text-center">
               <GlowAnimatedCounter targetValue={10000} suffix="k+" duration={2500} />
-              <div className="text-text-muted text-sm mt-2">Active Participants</div>
+              <div className="text-text-muted text-lg mt-2">Active Participants</div>
             </div>
             
             <div className="text-center">
               <GlowAnimatedCounter targetValue={100} suffix="+" duration={2000} />
-              <div className="text-text-muted text-sm mt-2">Expert Speakers</div>
+              <div className="text-text-muted text-lg mt-2">Expert Speakers</div>
             </div>
           </div>
 
           {/* Partners carousel */}
           <div className="mt-16 animate-fade-up animation-delay-500">
-            <p className="text-text-muted text-sm font-bold tracking-wider">
+            <p className="text-text-muted text-2xl font-bold tracking-wider">
               They trust us
             </p>
             <PartnerCarousel />
