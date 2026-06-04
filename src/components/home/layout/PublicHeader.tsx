@@ -44,7 +44,7 @@ export function PublicHeader() {
             : "bg-transparent"
         }`}
       >
-        <nav className="container-custom mx-auto flex items-center justify-between py-4">
+        <nav className="container-custom mx-auto flex items-center justify-between">
           {/* Logo */}
           <Link
             href="#home"
