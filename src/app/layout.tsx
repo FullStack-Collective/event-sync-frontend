@@ -22,8 +22,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EventSync - Gestion d'événements en temps réel",
-  description: "Plateforme de gestion d'événements et d'engagement des participants en temps réel",
+  title: "Agora - Real-time event management",
+  description: "Platform for real-time event management and participant engagement",
+  icons: {
+    icon: "/favicon.ico?v=2",
+    shortcut: "/favicon.ico?v=2",
+  },
 };
 
 export default function RootLayout({

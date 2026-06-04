@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import logo from "@/app/(public)/logo/Logo.png";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -52,10 +54,12 @@ export function PublicHeader() {
             className="group relative z-10"
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-sage rounded-lg rotate-45 group-hover:rotate-90 transition-transform duration-300" />
-              <span className="text-2xl font-display font-bold text-gradient-primary">
-                EventSync
-              </span>
+              <Image
+                src={logo}
+                alt="Logo"
+                width={150}
+                height={75}
+              />
             </div>
           </Link>
 
