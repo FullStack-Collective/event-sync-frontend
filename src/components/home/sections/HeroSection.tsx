@@ -44,31 +44,31 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6 animate-fade-up">
             <Zap className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">
-              Plateforme événementielle nouvelle génération
+              Next-generation event platform
             </span>
           </div>
 
           {/* Title */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 animate-fade-up animation-delay-100">
-            Gérez vos événements
+            Manage your events
             <br />
-            <span className="text-gradient-primary">en temps réel</span>
+            <span className="text-gradient-primary">in real-time</span>
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-10 animate-fade-up animation-delay-200">
-            EventSync révolutionne la gestion d'événements avec une interface dynamique,
-            des interactions en direct et une expérience participative unique.
+            EventSync revolutionizes event management with a dynamic interface,
+            real-time interactions, and a unique participatory experience.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-300">
             <button className="btn-primary text-lg px-8 py-3 group">
-              Explorer les événements
+              Explore Events
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button className="btn-outline text-lg px-8 py-3">
-              En savoir plus
+              Learn More
             </button>
           </div>
 
@@ -76,15 +76,15 @@ export function HeroSection() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 border-t border-border animate-fade-up animation-delay-400">
             <div className="text-center">
               <div className="text-3xl font-bold text-primary">50+</div>
-              <div className="text-text-muted text-sm mt-1">Événements organisés</div>
+              <div className="text-text-muted text-sm mt-1">Events Organized</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-primary">10k+</div>
-              <div className="text-text-muted text-sm mt-1">Participants actifs</div>
+              <div className="text-text-muted text-sm mt-1">Active Participants</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-primary">100+</div>
-              <div className="text-text-muted text-sm mt-1">Speakers experts</div>
+              <div className="text-text-muted text-sm mt-1">Expert Speakers</div>
             </div>
           </div>
         </div>
