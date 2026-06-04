@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { label: "Accueil", href: "#home" },
-  { label: "Événements", href: "#events" },
+  { label: "Home", href: "#home" },
+  { label: "Events", href: "#events" },
   { label: "Speakers", href: "#speakers" },
-  { label: "À propos", href: "#about" },
+  { label: "About", href: "#about" },
 ];
 
 export function PublicHeader() {
@@ -44,7 +44,7 @@ export function PublicHeader() {
             : "bg-transparent"
         }`}
       >
-        <nav className="container-custom mx-auto flex items-center justify-between py-4">
+        <nav className="container-custom mx-auto flex items-center justify-between">
           {/* Logo */}
           <Link
             href="#home"
@@ -75,11 +75,11 @@ export function PublicHeader() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
-            <button className="btn-primary">
-              Commencer
+          <div className="hidden md:block py-2">
+            <Link href="/events" className="btn-primary">
+              See all events
               <span className="ml-2">→</span>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -114,7 +114,7 @@ export function PublicHeader() {
                 {item.label}
               </a>
             ))}
-            <button className="btn-primary mt-4">Commencer</button>
+            <button className="btn-primary mt-4">See all events</button>
           </div>
         </div>
       )}
