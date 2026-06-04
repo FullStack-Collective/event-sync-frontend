@@ -1,0 +1,121 @@
+import Link from "next/link";
+import { Github, Twitter, Linkedin, Mail, MapPin, Calendar, Users } from "lucide-react";
+
+export function PublicFooter() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="relative bg-bg-surface/50 border-t border-border mt-20">
+      <div className="container-custom mx-auto py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-sage rounded-lg rotate-45" />
+              <span className="text-xl font-display font-bold text-gradient-primary">
+                EventSync
+              </span>
+            </div>
+            <p className="text-text-muted text-sm">
+              La plateforme de gestion d'événements et d'engagement des participants en temps réel.
+            </p>
+            <div className="flex gap-4 pt-4">
+              <a href="#" className="text-text-muted hover:text-primary transition-colors">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-text-muted hover:text-primary transition-colors">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-text-muted hover:text-primary transition-colors">
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-text-muted hover:text-primary transition-colors">
+                <Mail className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="font-display font-semibold text-text">Navigation</h3>
+            <ul className="space-y-2">
+              <li>
+                <a href="#home" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  Accueil
+                </a>
+              </li>
+              <li>
+                <a href="#events" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  Événements
+                </a>
+              </li>
+              <li>
+                <a href="#speakers" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  Speakers
+                </a>
+              </li>
+              <li>
+                <a href="#about" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  À propos
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div className="space-y-4">
+            <h3 className="font-display font-semibold text-text">Ressources</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="#" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  Documentation
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  API Reference
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  Support
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-text-muted hover:text-primary transition-colors text-sm">
+                  Blog
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h3 className="font-display font-semibold text-text">Contact</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3 text-text-muted text-sm">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
+                <span>Paris, France</span>
+              </li>
+              <li className="flex items-start gap-3 text-text-muted text-sm">
+                <Mail className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
+                <span>contact@eventsync.com</span>
+              </li>
+              <li className="flex items-start gap-3 text-text-muted text-sm">
+                <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
+                <span>Support 24/7</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-border mt-12 pt-8 text-center">
+          <p className="text-text-muted text-sm">
+            © {currentYear} EventSync. Tous droits réservés.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
