@@ -93,9 +93,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Carrousel des partenaires - AJOUTE ICI */}
+          {/* Partners carousel */}
           <div className="mt-16 animate-fade-up animation-delay-500">
-            <p className="text-text-muted text-sm uppercase tracking-wider mb-6">
+            <p className="text-text-muted text-sm font-bold tracking-wider">
               They trust us
             </p>
             <PartnerCarousel />

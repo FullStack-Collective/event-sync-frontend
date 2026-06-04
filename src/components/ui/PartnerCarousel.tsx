@@ -59,7 +59,6 @@ export function PartnerCarousel() {
     };
   }, []);
 
-  // Doubler les logos pour un effet infini seamless
   const allPartners = [...partners, ...partners];
 
   return (
