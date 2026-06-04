@@ -43,22 +43,22 @@ export const WeekView = ({ events, currentWeek, onWeekChange }: WeekViewProps) =
   };
 
   return (
-    <div className="w-full rounded-xl overflow-hidden border-[1.5px] border-clay animate-[fadeUp_.4s_cubic-bezier(.2,.9,.4,1)_both]">
-      <div className="grid grid-cols-7 bg-warm-white border-b-[1.5px] border-clay">
+    <div className="w-full rounded-lg overflow-hidden border-[1.5px] border-white animate-[fadeUp_.4s_cubic-bezier(.2,.9,.4,1)_both]">
+      <div className="grid grid-cols-7 bg-gray-400 border-b-[1.5px] border-white text-sage-800">
         {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((name, i) => (
           <div
             key={name}
-            className={`py-2.5 text-center border-r border-clay last:border-r-0 ${i >= 5 ? 'text-sage-500' : 'text-sage-300'}`}
+            className={`py-2.5 text-center border-r border-white last:border-r-0 ${i >= 5 ? 'text-sage-600' : 'text-sage-600'}`}
           >
             <div className="text-[11px] font-bold tracking-widest uppercase">{name}</div>
-            <div className="text-xs text-sage-400 mt-0.5">
+            <div className="text-xs text-sage-800 mt-0.5">
               {weekDays[i].toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 bg-gray-300">
         {weekDays.map((day, idx) => {
           const isToday = day.toDateString() === todayStr;
           const dayEvents = getEventsForDay(day);
@@ -68,8 +68,8 @@ export const WeekView = ({ events, currentWeek, onWeekChange }: WeekViewProps) =
               className={[
                 'min-h-[120px] p-1.5 border-r border-b border-clay last:border-r-0 transition-colors',
                 isToday
-                  ? 'bg-sage-50 outline outline-2 outline-sage-500 outline-offset-[-2px]'
-                  : 'bg-warm-white hover:bg-sage-50/50',
+                  ? 'bg-gray-100  outline-sage-500 outline-offset-[-2px]'
+                  : 'bg-gray-200 hover:bg-sage-50/50',
               ].join(' ')}
             >
               <div className="space-y-1">

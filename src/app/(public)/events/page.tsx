@@ -6,6 +6,9 @@ import { WeekView } from '@/modules/events/components/WeekView';
 import { MonthView } from '@/modules/events/components/MonthView';
 import { eventService } from '@/modules/events/services/event.service';
 import { Event } from '@/modules/events/types/event.types';
+import { ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+
 
 type ViewMode = 'month' | 'week';
 type FilterMode = 'all' | 'live' | 'soon' | 'future';
@@ -113,18 +116,38 @@ export default function EventsPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-16">
 
-      <div className="relative mb-3">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sage-300 pointer-events-none" />
+      <div className="relative mb-3 ">
+        <Search className="absolute left-3.5 top-1/2 ml-[25rem] -translate-y-1/2 w-4 h-4 text-sage-300 pointer-events-none" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search events by title, location…"
-          className="w-full bg-warm-white border-[1.5px] border-clay rounded-xl pl-10 pr-4 py-2.5 text-sm text-sage-800 placeholder:text-sage-300 outline-none focus:border-sage-400 focus:shadow-[0_0_0_3px_rgba(45,106,79,0.08)] transition-all"
+          placeholder="Search events ...."
+          className="text-green-300 ml-[25rem] border-[1.5px] border-clay rounded-xl pl-10 pr-4 py-2.5 text-sm  placeholder:text-sage-300 outline-none focus:border-sage-400 focus:shadow-[0_0_0_3px_rgba(45,106,79,0.08)] transition-all"
         />
       </div>
 
-      <div className="flex gap-2 mb-3 flex-wrap">
+
+
+      <div className="flex items-center justify-between bg-gray-800 border-[1.5px] border-gray-600 rounded-xl px-4 py-2.5 mb-3 gap-3 flex-wrap">
+        <div className="flex rounded-lg overflow-hidden border-[1.5px] border-gray-600">
+          {(['month', 'week'] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setViewMode(mode)}
+              className={[
+                'px-5 py-1.5 text-sm font-bold transition-all',
+                viewMode === mode
+                  ? 'bg-sage-800 text-white'
+                  : 'bg-transparent text-white hover:bg-sage-800',
+              ].join(' ')}
+            >
+              {mode === 'month' ? 'Month' : 'Week'}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex gap-2 mb-3 flex-wrap bg-gray-800 rounded-lg p-2 ">
         {FILTERS.map(({ key, label }) => {
           const isActive = filter === key;
           const isLive = key === 'live';
@@ -156,34 +179,11 @@ export default function EventsPage() {
           );
         })}
       </div>
-
-      <div className="flex items-center justify-between bg-warm-white border-[1.5px] border-clay rounded-xl px-4 py-2.5 mb-3 gap-3 flex-wrap">
-        <div className="flex rounded-lg overflow-hidden border-[1.5px] border-sage-800">
-          {(['month', 'week'] as const).map((mode) => (
-            <button
-              key={mode}
-              onClick={() => setViewMode(mode)}
-              className={[
-                'px-5 py-1.5 text-sm font-bold transition-all',
-                viewMode === mode
-                  ? 'bg-sage-800 text-white'
-                  : 'bg-transparent text-sage-800 hover:bg-sage-50',
-              ].join(' ')}
-            >
-              {mode === 'month' ? 'Month' : 'Week'}
-            </button>
-          ))}
-        </div>
-
-        <span className="text-base font-bold text-sage-800 tracking-tight">
-          {getMonthLabel()}
-        </span>
-
-        <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2">
           {[
-            { label: 'Past month', fn: () => navigate(-1) },
+            { label: <span className="flex items-center"><ArrowLeft />Past</span>, fn: () => navigate(-1) },
             { label: 'Today', fn: () => setCurrentDate(new Date()) },
-            { label: 'Next month', fn: () => navigate(1) },
+            { label: <span className="flex items-center"> Next <ArrowRight className=" text-[8px]" /></span> , fn: () => navigate(1) },
           ].map(({ label, fn }) => (
             <button
               key={label}
@@ -195,16 +195,17 @@ export default function EventsPage() {
           ))}
         </div>
       </div>
+      <span className=" font-bold text-white tracking-tight ml-[29rem] text-2xl">
+          {getMonthLabel()}
+      </span>
 
-      {/* ── Vue ── */}
-      {viewMode === 'month' ? (
+       {viewMode === 'month' ? (
         <MonthView events={filteredEvents} currentMonth={currentDate} />
       ) : (
         <WeekView events={filteredEvents} currentWeek={currentDate} onWeekChange={setCurrentDate} />
       )}
 
-      {/* ── Légende ── */}
-      <div className="flex gap-5 mt-3 flex-wrap">
+       <div className="flex gap-5 mt-3 flex-wrap">
         {[
           { color: 'bg-error/20 border-error/50', label: 'Live' },
           { color: 'bg-ochre-100 border-ochre-500/50', label: 'In the month' },
