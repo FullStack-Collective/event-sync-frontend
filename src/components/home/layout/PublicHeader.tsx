@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { label: "Accueil", href: "#home" },
-  { label: "Événements", href: "#events" },
+  { label: "Home", href: "#home" },
+  { label: "Events", href: "#events" },
   { label: "Speakers", href: "#speakers" },
-  { label: "À propos", href: "#about" },
+  { label: "About", href: "#about" },
 ];
 
 export function PublicHeader() {
@@ -77,7 +77,7 @@ export function PublicHeader() {
           {/* CTA Button */}
           <div className="hidden md:block">
             <button className="btn-primary">
-              Commencer
+              See all events
               <span className="ml-2">→</span>
             </button>
           </div>
@@ -114,7 +114,7 @@ export function PublicHeader() {
                 {item.label}
               </a>
             ))}
-            <button className="btn-primary mt-4">Commencer</button>
+            <button className="btn-primary mt-4">See all events</button>
           </div>
         </div>
       )}
