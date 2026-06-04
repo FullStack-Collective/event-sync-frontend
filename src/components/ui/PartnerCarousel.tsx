@@ -36,13 +36,11 @@ export function PartnerCarousel() {
     if (!scroller) return;
 
     let startTime: number | null = null;
-    const speed = 40; // pixels par seconde - ajuste pour plus ou moins de rapidité
-
+    const speed = 30;
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const elapsed = (timestamp - startTime) / 1000;
       
-      // Défilement continu vers la droite
       scrollPosRef.current = (scrollPosRef.current + speed * 0.016) % (scroller.scrollWidth / 2);
       
       if (scroller) {
@@ -65,7 +63,7 @@ export function PartnerCarousel() {
   const allPartners = [...partners, ...partners];
 
   return (
-    <div className="w-full overflow-hidden py-8 mt-16">
+    <div className="w-full overflow-hidden pt-2">
       <div className="relative">
         {/* Gradient fade left */}
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
