@@ -1,0 +1,94 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { ArrowRight, Calendar, Users, Zap } from "lucide-react";
+
+export function HeroSection() {
+  const heroRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-fade-up");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      id="home"
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float animation-delay-2000" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-sage opacity-5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container-custom mx-auto relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6 animate-fade-up">
+            <Zap className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">
+              Plateforme événementielle nouvelle génération
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 animate-fade-up animation-delay-100">
+            Gérez vos événements
+            <br />
+            <span className="text-gradient-primary">en temps réel</span>
+          </h1>
+
+          {/* Description */}
+          <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-10 animate-fade-up animation-delay-200">
+            EventSync révolutionne la gestion d'événements avec une interface dynamique,
+            des interactions en direct et une expérience participative unique.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-300">
+            <button className="btn-primary text-lg px-8 py-3 group">
+              Explorer les événements
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button className="btn-outline text-lg px-8 py-3">
+              En savoir plus
+            </button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 border-t border-border animate-fade-up animation-delay-400">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary">50+</div>
+              <div className="text-text-muted text-sm mt-1">Événements organisés</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary">10k+</div>
+              <div className="text-text-muted text-sm mt-1">Participants actifs</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary">100+</div>
+              <div className="text-text-muted text-sm mt-1">Speakers experts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
