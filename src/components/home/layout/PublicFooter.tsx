@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Twitter, Linkedin, Mail, MapPin, Calendar, Users } from "lucide-react";
+import { Mail, MapPin, Calendar, Users } from "lucide-react";
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
@@ -21,13 +21,13 @@ export function PublicFooter() {
             </p>
             <div className="flex gap-4 pt-4">
               <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Github className="w-5 h-5" />
+                <Calendar className="w-5 h-5" />
               </a>
               <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
+                <Calendar className="w-5 h-5" />
               </a>
               <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Linkedin className="w-5 h-5" />
+                <Calendar className="w-5 h-5" />
               </a>
               <a href="#" className="text-text-muted hover:text-primary transition-colors">
                 <Mail className="w-5 h-5" />

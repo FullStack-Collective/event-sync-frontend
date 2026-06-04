@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Twitter, Linkedin, Github, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight } from "lucide-react";
 
 const speakers = [
   {
@@ -103,13 +103,13 @@ export function SpeakersSection() {
               
               <div className="flex justify-center gap-3 pt-2 border-t border-border">
                 <a href={speaker.socials.twitter} className="text-text-muted hover:text-primary transition-colors">
-                  <Twitter className="w-4 h-4" />
+                  <Calendar className="w-4 h-4" />
                 </a>
                 <a href={speaker.socials.linkedin} className="text-text-muted hover:text-primary transition-colors">
-                  <Linkedin className="w-4 h-4" />
+                  <Calendar className="w-4 h-4" />
                 </a>
                 <a href={speaker.socials.github} className="text-text-muted hover:text-primary transition-colors">
-                  <Github className="w-4 h-4" />
+                  <Calendar className="w-4 h-4" />
                 </a>
               </div>
             </div>
