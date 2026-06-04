@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { ArrowRight, Calendar, Users, Zap } from "lucide-react";
 import { GlowAnimatedCounter } from "@/components/ui/GlowAnimatedCounter";
+import { PartnerCarousel } from "@/components/ui/PartnerCarousel";
 
 export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -90,6 +91,14 @@ export function HeroSection() {
               <GlowAnimatedCounter targetValue={100} suffix="+" duration={2000} />
               <div className="text-text-muted text-sm mt-2">Expert Speakers</div>
             </div>
+          </div>
+
+          {/* Carrousel des partenaires - AJOUTE ICI */}
+          <div className="mt-16 animate-fade-up animation-delay-500">
+            <p className="text-text-muted text-sm uppercase tracking-wider mb-6">
+              They trust us
+            </p>
+            <PartnerCarousel />
           </div>
         </div>
       </div>

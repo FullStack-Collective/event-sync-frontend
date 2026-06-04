@@ -1,30 +1,29 @@
-// src/components/ui/PartnerCarousel.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
 
 const partners = [
-  { name: "Hewlett Packard", color: "#0096D6" },
-  { name: "HubSpot", color: "#FF7A59" },
-  { name: "Intel", color: "#0071C5" },
-  { name: "3M", color: "#E2001A" },
-  { name: "Accenture", color: "#A100FF" },
-  { name: "Adobe", color: "#FF0000" },
-  { name: "Alphabet", color: "#4285F4" },
-  { name: "Amazon", color: "#FF9900" },
-  { name: "Aramark", color: "#0087DC" },
-  { name: "AT&T", color: "#009FDF" },
-  { name: "Bitwarden", color: "#175DDC" },
-  { name: "BNP Paribas", color: "#009E60" },
-  { name: "QBOE", color: "#000000" },
-  { name: "Wayfair", color: "#C49A6C" },
-  { name: "XPO", color: "#E31C23" },
-  { name: "Johnson & Johnson", color: "#E31C23" },
-  { name: "KPMG", color: "#003399" },
-  { name: "Live Nation", color: "#E11D48" },
-  { name: "Mars", color: "#E9542A" },
-  { name: "Meta", color: "#0066FF" },
-  { name: "Microsoft", color: "#F25022" },
+  { name: "Hewlett Packard", color: "#465257" },
+  { name: "HubSpot", color: "#465257" },
+  { name: "Intel", color: "#465257" },
+  { name: "3M", color: "#465257" },
+  { name: "Accenture", color: "#465257" },
+  { name: "Adobe", color: "#465257" },
+  { name: "Alphabet", color: "#465257" },
+  { name: "Amazon", color: "#465257" },
+  { name: "Aramark", color: "#465257" },
+  { name: "AT&T", color: "#465257" },
+  { name: "Bitwarden", color: "#465257" },
+  { name: "BNP Paribas", color: "#465257" },
+  { name: "QBOE", color: "#465257" },
+  { name: "Wayfair", color: "#465257" },
+  { name: "XPO", color: "#465257" },
+  { name: "Johnson & Johnson", color: "#465257" },
+  { name: "KPMG", color: "#465257" },
+  { name: "Live Nation", color: "#465257" },
+  { name: "Mars", color: "#465257" },
+  { name: "Meta", color: "#465257" },
+  { name: "Microsoft", color: "#465257" },
 ];
 
 export function PartnerCarousel() {
