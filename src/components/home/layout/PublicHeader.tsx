@@ -76,10 +76,10 @@ export function PublicHeader() {
 
           {/* CTA Button */}
           <div className="hidden md:block py-2">
-            <button className="btn-primary">
+            <Link href="/events" className="btn-primary">
               See all events
               <span className="ml-2">→</span>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
