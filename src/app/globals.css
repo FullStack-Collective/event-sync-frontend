@@ -379,10 +379,6 @@ h1, h2, h3, h4, h5, h6 {
   animation: float 6s ease-in-out infinite;
 }
 
-.animate-sage-glow {
-  animation: sageGlow 2s ease-in-out infinite;
-}
-
 .animation-delay-2000 {
   animation-delay: 2s;
 }

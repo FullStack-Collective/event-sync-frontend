@@ -47,7 +47,7 @@ export function GlowAnimatedCounter({
 
   return (
     <div ref={ref} className="relative inline-block">
-      <div className="text-3xl font-bold text-white animate-sage-glow py-1 px-4 rounded-lg">
+      <div className="text-3xl font-bold text-white py-1 px-4 rounded-lg">
         {formatValue()}
       </div>
       <div className="absolute inset-0 blur-xl opacity-20 -z-10" />
