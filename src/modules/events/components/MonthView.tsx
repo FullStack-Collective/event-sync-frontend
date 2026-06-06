@@ -59,10 +59,18 @@ export const MonthView = ({ events, currentMonth }: MonthViewProps) => {
   const todayStr = new Date().toDateString();
 
   const getEventsForDay = (date: Date) => {
-    const dayStr = date.toISOString().split('T')[0];
-    return events.filter(
-      (e) => new Date(e.startDate).toISOString().split('T')[0] === dayStr
-    );
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    return events.filter((e) => {
+      const eventDate = new Date(e.startDate);
+       return (
+        eventDate.getFullYear() == year &&
+      eventDate.getMonth() == month &&
+      eventDate.getDate() == day
+       );
+    });
   };
 
   return (

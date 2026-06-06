@@ -38,8 +38,18 @@ export const WeekView = ({ events, currentWeek, onWeekChange }: WeekViewProps) =
   const todayStr = new Date().toDateString();
 
   const getEventsForDay = (day: Date) => {
-    const dayStr = day.toISOString().split('T')[0];
-    return events.filter((e) => new Date(e.startDate).toISOString().split('T')[0] === dayStr);
+     const year = day.getFullYear();
+     const month = day.getMonth();
+     const date = day.getDate();
+
+     return events.filter((e) => {
+      const eventDate = new Date(e.startDate);
+      return (
+        eventDate.getFullYear() == year &&
+        eventDate.getMonth() == month &&
+        eventDate.getDate() == date
+        );
+     });
   };
 
   return (
