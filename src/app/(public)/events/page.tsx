@@ -8,11 +8,8 @@ import { eventService } from '@/modules/events/services/event.service';
 import { Event } from '@/modules/events/types/event.types';
 import { ArrowRight } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
-
-
 type ViewMode = 'month' | 'week';
 type FilterMode = 'all' | 'live' | 'soon' | 'future';
-
 const getEventStatus = (event: Event): 'live' | 'soon' | 'future' | 'past' => {
   const now = new Date();
   const nowTime = now.getTime();
@@ -91,7 +88,7 @@ export default function EventsPage() {
     { key: 'all', label: 'All' },
     { key: 'live', label: 'Live' },
     { key: 'soon', label: 'Upcoming' },
-   ];
+  ];
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[400px]">

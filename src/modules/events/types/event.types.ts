@@ -1,3 +1,27 @@
+export interface Speaker {
+  id: number;
+  name: string;
+  photoUrl?: string | null;
+  bio?: string | null;
+  twitter?: string | null;
+  linkedin?: string | null;
+}
+
+export interface Room {
+  id: number;
+  name: string;
+  capacity?: number | null;
+}
+
+export interface Session {
+  id: number;
+  title: string;
+  description?: string | null;
+  startTime: string;
+  endTime: string;
+  room: Room;
+  speakers: { speaker: Speaker }[];
+}
 export interface Event {
   id: number;
   title: string;
@@ -13,6 +37,8 @@ export interface Event {
   isPast: boolean;
   totalSessions: number;
   totalQuestions: number;
+
+  sessions: Session[];
  }
 
 export interface EventListResponse {
