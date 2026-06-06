@@ -66,10 +66,10 @@ export function EventsSection() {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Nos <span className="text-gradient-primary">Événements</span>
+            Our <span className="text-gradient-primary">Events</span>
           </h2>
           <p className="text-text-muted max-w-2xl mx-auto">
-            Découvrez nos prochains événements et rejoignez une communauté passionnée
+            Discover our upcoming events and join a passionate community
           </p>
         </div>
 
