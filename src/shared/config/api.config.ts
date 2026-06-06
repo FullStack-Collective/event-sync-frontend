@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// Supprimons le "/api" ici car il sera ajouté dans les endpoints
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 /**
- * Classe d'erreur personnalisée pour centraliser et traiter les retours HTTP invalides.
+ * Classe d'erreur personnalisée
  */
 export class APIError extends Error {
   status: number;
@@ -17,36 +18,27 @@ export class APIError extends Error {
   }
 }
 
-/**
- * Options étendues pour apiFetch incluant la validation Zod optionnelle.
- */
 interface ApiFetchOptions<Schema extends z.ZodTypeAny = z.ZodTypeAny> extends RequestInit {
   schema?: Schema;
 }
 
 /**
- * Fetcher universel (Serveur/Client) avec support optionnel pour la validation Zod.
+ * Fetcher universel (Serveur/Client)
  */
 export async function apiFetch<T>(
   endpoint: string,
   options: ApiFetchOptions<z.ZodType<T>> = {}
 ): Promise<T> {
   const { schema, ...fetchOptions } = options;
-  let token: string | null = null;
   
+  // Récupération du token si nécessaire
+  let token: string | null = null;
   const isServer = typeof window === 'undefined';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isGetRequest = !fetchOptions.method || fetchOptions.method.toUpperCase() === 'GET';
 
   if (!isServer) {
     token = localStorage.getItem('admin_token');
-  } else if (!isGetRequest || endpoint.startsWith('/admin') || endpoint.startsWith('/auth/me')) {
-    try {
-      const { cookies } = await import('next/headers');
-      const cookieStore = await cookies();
-      token = cookieStore.get('admin_token')?.value || null;
-    } catch {
-      token = null; 
-    }
   }
 
   const headers = new Headers({
@@ -70,7 +62,7 @@ export async function apiFetch<T>(
       try {
         errorData = await response.json();
       } catch {
-        errorData = { message: "Erreur brute du serveur (Impossible de lire le JSON)" };
+        errorData = { message: "Erreur brute du serveur" };
       }
       throw new APIError(
         errorData?.message || `Échec de la requête : Statut ${response.status}`,
@@ -84,9 +76,9 @@ export async function apiFetch<T>(
     if (schema) {
       const parseResult = schema.safeParse(rawData);
       if (!parseResult.success) {
-        console.error(`[ZOD VALIDATION ERROR] sur l'endpoint: ${endpoint}`, parseResult.error.format());
+        console.error(`[ZOD VALIDATION ERROR] sur: ${endpoint}`, parseResult.error.format());
         throw new APIError(
-          "Les données renvoyées par le serveur ne correspondent pas au contrat attendu par l'application.",
+          "Les données ne correspondent pas au contrat attendu",
           422,
           parseResult.error.format()
         );
@@ -100,3 +92,11 @@ export async function apiFetch<T>(
     throw new APIError(`Erreur réseau : ${ (error as Error).message }`, 503);
   }
 }
+
+// Créons un client simple pour les méthodes GET, POST, etc.
+export const apiClient = {
+  get: <T>(endpoint: string): Promise<T> => apiFetch<T>(endpoint, { method: 'GET' }),
+  post: <T>(endpoint: string, data?: any): Promise<T> => apiFetch<T>(endpoint, { method: 'POST', body: JSON.stringify(data) }),
+  put: <T>(endpoint: string, data?: any): Promise<T> => apiFetch<T>(endpoint, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: <T>(endpoint: string): Promise<T> => apiFetch<T>(endpoint, { method: 'DELETE' }),
+};
