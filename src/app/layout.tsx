@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Syne, JetBrains_Mono } from "next/font/google";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import "./globals.css";
 
