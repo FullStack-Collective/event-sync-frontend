@@ -7,13 +7,13 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <PublicHeader />
-      <main className="relative overflow-hidden">
+      <main className="flex-1 relative overflow-hidden">
         <div className="fixed inset-0 bg-glow pointer-events-none opacity-40" />
         {children}
       </main>
       <PublicFooter />
-    </>
+    </div>
   );
 }
