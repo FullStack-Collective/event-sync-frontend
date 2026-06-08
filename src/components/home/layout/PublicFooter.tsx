@@ -119,7 +119,7 @@ export function PublicFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border mt-12 pt-8 text-center">
+        <div className="border-t border-border pt-2 text-center">
           <p className="text-text-muted text-sm">
             © {currentYear} Agora. All rights reserved.
           </p>
