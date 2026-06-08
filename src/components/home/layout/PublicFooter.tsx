@@ -87,7 +87,7 @@ export function PublicFooter() {
 
           {/* Resources */}
           <div>
-            <h3 className="font-display font-semibold text-text">Resources</h3>
+            <h3 className="font-display font-semibold text-text mt-1">Resources</h3>
             <ul>
               <li>
                 <Link href="#" className="text-text-muted hover:text-primary transition-colors text-sm">
