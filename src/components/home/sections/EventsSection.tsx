@@ -92,10 +92,10 @@ export function EventsSection() {
       <div className="container-custom mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Nos <span className="text-gradient-primary">Événements</span>
+            Our <span className="text-gradient-primary">Events</span>
           </h2>
           <p className="text-text-muted max-w-2xl mx-auto">
-            Découvrez nos prochains événements et rejoignez une communauté passionnée
+            Discover our upcoming events and join our passionate community
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export function EventsSection() {
           <div className="text-center py-12">
             <div className="inline-flex items-center gap-2 bg-error/10 text-error px-4 py-2 rounded-full mb-4">
               <AlertCircle className="w-5 h-5" />
-              <span className="text-sm font-medium">Erreur</span>
+              <span className="text-sm font-medium">Error</span>
             </div>
             <p className="text-text-muted">{error}</p>
           </div>
@@ -121,7 +121,7 @@ export function EventsSection() {
           <>
             {events.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-text-muted">Aucun événement à venir pour le moment.</p>
+                <p className="text-text-muted">No upcoming events at the moment.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -143,13 +143,13 @@ export function EventsSection() {
                       
                       {event.isLive && (
                         <div className="absolute top-4 left-4 live-badge">
-                          En direct
+                          Live
                         </div>
                       )}
                       
                       {event.isUpcoming && !event.isLive && (
                         <div className="absolute top-4 left-4 bg-primary/20 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full">
-                          À venir
+                          Upcoming
                         </div>
                       )}
                       
@@ -162,7 +162,7 @@ export function EventsSection() {
                       </h3>
                       
                       <p className="text-text-muted text-sm mb-4 line-clamp-3 flex-grow">
-                        {event.description || "Aucune description disponible."}
+                        {event.description || "No description available."}
                       </p>
                       
                       <div className="space-y-2 mb-4">
@@ -173,7 +173,7 @@ export function EventsSection() {
                         
                         <div className="flex items-center gap-2 text-text-muted text-sm">
                           <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span>{event.location || "Lieu à définir"}</span>
+                          <span>{event.location || "Location to be defined"}</span>
                         </div>
                         
                         <div className="flex items-center gap-2 text-text-muted text-sm">
@@ -184,7 +184,7 @@ export function EventsSection() {
 
                       <Link href={`/events/${event.id}`} className="w-full">
                         <button className="w-full btn-outline text-sm group">
-                          Voir les détails
+                          View Details
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                       </Link>
@@ -200,7 +200,7 @@ export function EventsSection() {
           <div className="text-center mt-12">
             <Link href="/events">
               <button className="btn-primary">
-                Voir tous les événements
+                View All Events
                 <ArrowRight className="w-5 h-5" />
               </button>
             </Link>
