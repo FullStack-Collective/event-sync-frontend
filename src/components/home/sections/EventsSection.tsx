@@ -183,8 +183,8 @@ export function EventsSection() {
                       </div>
 
                       <Link href={`/events/${event.id}`} className="w-full">
-                        <button className="w-full btn-outline text-sm group">
-                          View Details
+                        <button className="w-full btn-outline text-sm group flex items-center justify-center gap-2">
+                          <span>View Details</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                       </Link>
