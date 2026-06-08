@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Mail, MapPin, Calendar, Users } from "lucide-react";
+import Image from "next/image";
+import logo from "@/app/(public)/logo/Logo.png";
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
@@ -10,12 +12,19 @@ export function PublicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-sage rounded-lg rotate-45" />
-              <span className="text-xl font-display font-bold text-gradient-primary">
-                EventSync
-              </span>
-            </div>
+            <Link
+              href="#home"
+              className="group relative z-10"
+            >
+              <div className="flex items-center gap-2">
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width={150}
+                  height={75}
+                />
+              </div>
+            </Link>
             <p className="text-text-muted text-sm">
               La plateforme de gestion d'événements et d'engagement des participants en temps réel.
             </p>
