@@ -39,7 +39,6 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${dmSans.variable} ${syne.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased">
- b041103 (add events)
         {children}
       </body>
     </html>
