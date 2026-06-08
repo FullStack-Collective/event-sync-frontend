@@ -20,8 +20,8 @@ export function PublicFooter() {
                 <Image
                   src={logo}
                   alt="Logo"
-                  width={150}
-                  height={75}
+                  width={100}
+                  height={50}
                 />
               </div>
             </Link>
