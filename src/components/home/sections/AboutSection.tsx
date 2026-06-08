@@ -6,23 +6,23 @@ import { Sparkles, MessageCircle, Users, Calendar, CheckCircle, ArrowRight  } fr
 const features = [
   {
     icon: Sparkles,
-    title: "Gestion en temps réel",
-    description: "Planifiez et modifiez vos événements en direct avec une interface intuitive.",
+    title: "Real-time management",
+    description: "Plan and edit your live events using an intuitive interface.",
   },
   {
     icon: MessageCircle,
-    title: "Questions/Réponses live",
-    description: "Interagissez avec les participants via notre système de Q&A intégré.",
+    title: "Live Questions/Answers",
+    description: "Interact with participants through our integrated Q&A system.",
   },
   {
     icon: Users,
-    title: "Pages speakers",
-    description: "Chaque intervenant dispose d'une page publique professionnelle.",
+    title: "Speakers' Pages",
+    description: "Each speaker has a professional public page.",
   },
   {
     icon: Calendar,
-    title: "Planning multi-track",
-    description: "Visualisez toutes les sessions en parallèle dans une grille temporelle.",
+    title: "Multi-track Planning",
+    description: "Visualize all sessions in parallel on a timeline grid.",
   },
 ];
 
@@ -60,21 +60,21 @@ export function AboutSection() {
           {/* Left Column - Content */}
           <div>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 animate-on-scroll opacity-0">
-              Pourquoi choisir{" "}
-              <span className="text-gradient-primary">EventSync</span>
+              Why Choose{" "}
+              <span className="text-gradient-primary">Agora</span>
             </h2>
             <p className="text-text-muted mb-6 animate-on-scroll opacity-0">
-              EventSync est bien plus qu'une simple plateforme de gestion d'événements. 
-              Nous révolutionnons la façon dont les organisateurs et les participants 
-              interagissent lors des conférences et des workshops.
+              Agora is more than just a simple event management platform. 
+              We are revolutionizing the way organizers and participants 
+              interact during conferences and workshops.
             </p>
             
             <div className="space-y-4 mb-8">
               {[
-                "Interface moderne et réactive",
-                "Support multi-utilisateurs",
-                "Analytics en temps réel",
-                "Sécurité et fiabilité",
+                "Modern and responsive interface",
+                "Multi-user support",
+                "Real-time analytics",
+                "Security and reliability",
               ].map((item, index) => (
                 <div
                   key={index}
@@ -87,7 +87,7 @@ export function AboutSection() {
             </div>
 
             <button className="btn-primary animate-on-scroll opacity-0">
-              En savoir plus
+              Learn more
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
