@@ -25,10 +25,10 @@ export function PublicFooter() {
                 />
               </div>
             </Link>
-            <p className="text-text-muted text-sm">
+            <p className="pl-2 my-2 text-text-muted text-sm">
               The real-time event management and attendee engagement platform.
             </p>
-            <div className="flex gap-4 pt-4">
+            <div className="pl-2 flex gap-4">
               <a href="#" className="text-text-muted hover:text-primary transition-colors">
                 <Calendar className="w-5 h-5" />
               </a>
