@@ -45,9 +45,9 @@ export function PublicFooter() {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             <h3 className="font-display font-semibold text-text">Navigation</h3>
-            <ul className="space-y-2">
+            <ul>
               <li>
                 <a href="#home" className="text-text-muted hover:text-primary transition-colors text-sm">
                   Home
