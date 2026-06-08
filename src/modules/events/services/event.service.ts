@@ -36,4 +36,28 @@ export const eventService = {
   getUpcoming: async (limit = 10): Promise<{ success: boolean; data: Event[]; count: number }> => {
     return apiClient.get(`/api/events/upcoming?limit=${limit}`);
   },
+
+  getUpcomingEvents: async (limit: number = 3): Promise<Event[]> => {
+    try {
+      const response = await apiClient.get(`/api/events/upcoming?limit=${limit}`);
+      
+      if (response.success && response.data) {
+        return response.data;
+      }
+      return [];
+    } catch (error) {
+      console.error("Erreur lors de la récupération des événements à venir:", error);
+      return [];
+    }
+  },
+
+  getEventByIdSafe: async (id: number): Promise<Event | null> => {
+    try {
+      const response = await apiClient.get(`/api/events/${id}`);
+      return response.success ? response.data : null;
+    } catch (error) {
+      console.error(`Erreur lors de la récupération de l'événement ${id}:`, error);
+      return null;
+    }
+  },
 };
