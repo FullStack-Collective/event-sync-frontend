@@ -45,7 +45,7 @@ export function PublicFooter() {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-2">
+          <div>
             <h3 className="font-display font-semibold text-text">Navigation</h3>
             <ul>
               <li>
@@ -72,7 +72,7 @@ export function PublicFooter() {
           </div>
 
           {/* Resources */}
-          <div className="space-y-2">
+          <div>
             <h3 className="font-display font-semibold text-text">Resources</h3>
             <ul>
               <li>
