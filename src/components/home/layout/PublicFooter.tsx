@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { Mail, MapPin, Calendar, Users } from "lucide-react";
+import { Mail, MapPin, Calendar } from "lucide-react";
+import { FaLinkedin, FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import Image from "next/image";
 import logo from "@/app/(public)/logo/Logo.png";
 
@@ -28,18 +30,32 @@ export function PublicFooter() {
             <p className="pl-2 my-2 text-text-muted text-sm">
               The real-time event management and attendee engagement platform.
             </p>
-            <div className="pl-2 flex gap-4">
-              <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Calendar className="w-5 h-5" />
+           <div className="pl-2 flex gap-4">
+              <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                <FaXTwitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Calendar className="w-5 h-5" />
+
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                <FaLinkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Calendar className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-text-muted hover:text-primary transition-colors">
-                <Mail className="w-5 h-5" />
+
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                <FaFacebook className="w-5 h-5" />
               </a>
             </div>
           </div>
