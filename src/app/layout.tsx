@@ -38,7 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${dmSans.variable} ${syne.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased">
+      <body className="antialiased min-h-screen flex flex-col">
         {children}
       </body>
     </html>
