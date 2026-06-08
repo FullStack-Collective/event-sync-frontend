@@ -46,7 +46,7 @@ export function PublicFooter() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-display font-semibold text-text">Navigation</h3>
+            <h3 className="font-display font-semibold text-text mt-1">Navigation</h3>
             <ul>
               <li>
                 <a href="#home" className="text-text-muted hover:text-primary transition-colors text-sm">
@@ -99,9 +99,9 @@ export function PublicFooter() {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="font-display font-semibold text-text">Contact</h3>
-            <ul className="space-y-3">
+          <div className="space-y-2">
+            <h3 className="font-display font-semibold text-text mt-1">Contact</h3>
+            <ul className="space-y-2">
               <li className="flex items-start gap-3 text-text-muted text-sm">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
                 <span>Antananarivo, Madagascar</span>
