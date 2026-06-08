@@ -26,7 +26,7 @@ export function PublicFooter() {
               </div>
             </Link>
             <p className="text-text-muted text-sm">
-              La plateforme de gestion d'événements et d'engagement des participants en temps réel.
+              The real-time event management and attendee engagement platform.
             </p>
             <div className="flex gap-4 pt-4">
               <a href="#" className="text-text-muted hover:text-primary transition-colors">
@@ -50,12 +50,12 @@ export function PublicFooter() {
             <ul className="space-y-2">
               <li>
                 <a href="#home" className="text-text-muted hover:text-primary transition-colors text-sm">
-                  Accueil
+                  Home
                 </a>
               </li>
               <li>
                 <a href="#events" className="text-text-muted hover:text-primary transition-colors text-sm">
-                  Événements
+                  Events
                 </a>
               </li>
               <li>
@@ -65,7 +65,7 @@ export function PublicFooter() {
               </li>
               <li>
                 <a href="#about" className="text-text-muted hover:text-primary transition-colors text-sm">
-                  À propos
+                  About
                 </a>
               </li>
             </ul>
@@ -73,7 +73,7 @@ export function PublicFooter() {
 
           {/* Resources */}
           <div className="space-y-4">
-            <h3 className="font-display font-semibold text-text">Ressources</h3>
+            <h3 className="font-display font-semibold text-text">Resources</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-text-muted hover:text-primary transition-colors text-sm">
@@ -104,11 +104,11 @@ export function PublicFooter() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-text-muted text-sm">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
-                <span>Paris, France</span>
+                <span>Antananarivo, Madagascar</span>
               </li>
               <li className="flex items-start gap-3 text-text-muted text-sm">
                 <Mail className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
-                <span>contact@eventsync.com</span>
+                <span>contact@agora.com</span>
               </li>
               <li className="flex items-start gap-3 text-text-muted text-sm">
                 <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
@@ -121,7 +121,7 @@ export function PublicFooter() {
         {/* Bottom Bar */}
         <div className="border-t border-border mt-12 pt-8 text-center">
           <p className="text-text-muted text-sm">
-            © {currentYear} EventSync. Tous droits réservés.
+            © {currentYear} Agora. All rights reserved.
           </p>
         </div>
       </div>
