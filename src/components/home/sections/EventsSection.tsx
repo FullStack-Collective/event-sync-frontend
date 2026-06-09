@@ -92,7 +92,7 @@ export function EventsSection() {
       <div className="container-custom mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Our <span className="text-gradient-primary">Events</span>
+            Our upcoming <span className="text-gradient-primary">Events</span>
           </h2>
           <p className="text-text-muted max-w-2xl mx-auto">
             Discover our upcoming events and join our passionate community
