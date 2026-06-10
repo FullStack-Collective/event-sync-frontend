@@ -6,16 +6,28 @@ import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, MapPin, Layers, Users, ChevronRight } from 'lucide-react';
 import { eventService } from '@/modules/events/services/event.service';
 import { Event } from '@/modules/events/types/event.types';
+import { parseUTCDate, formatUTCDate, isLiveUTC } from '@/shared/utils/format-date';
 
-const formatDate = (d: string) =>
-  new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const formatDate = (dateString: string) => {
+  const date = parseUTCDate(dateString);
+  return date.toLocaleDateString('en-US', { 
+    weekday: 'long',
+    day: 'numeric', 
+    month: 'long', 
+    year: 'numeric' 
+  });
+};
 
-const formatTime = (d: string) =>
-  new Date(d).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+const formatTime = (dateString: string) => {
+  const date = parseUTCDate(dateString);
+  return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+};
 
-const isLiveNow = (start: string, end: string) => {
-  const now = Date.now();
-  return now >= new Date(start).getTime() && now <= new Date(end).getTime();
+const getDuration = (start: string, end: string) => {
+  const startDate = parseUTCDate(start);
+  const endDate = parseUTCDate(end);
+  const diffHours = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
+  return `${diffHours} hour${diffHours > 1 ? 's' : ''}`;
 };
 
 export default function EventDetailPage() {
@@ -30,9 +42,9 @@ export default function EventDetailPage() {
       try {
         const res = await eventService.getById(parseInt(id));
         if (res.success) setEvent(res.data);
-        else setError('Événement introuvable');
+        else setError('Event not found');
       } catch {
-        setError('Erreur lors du chargement');
+        setError('Error loading event');
       } finally {
         setLoading(false);
       }
@@ -42,116 +54,135 @@ export default function EventDetailPage() {
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[400px]">
-      <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
   if (error || !event) return (
     <div className="text-center py-20">
-      <p className="text-error mb-4">{error ?? 'Événement introuvable'}</p>
+      <p className="text-error mb-4">{error ?? 'Event not found'}</p>
       <button onClick={() => router.push('/events')} className="btn-primary">
-        ← Retour aux événements
+        ← Back to Events
       </button>
     </div>
   );
 
-  const live = isLiveNow(event.startDate, event.endDate);
+  const isLive = isLiveUTC(event.startDate, event.endDate);
+  const duration = getDuration(event.startDate, event.endDate);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 mt-16">
-
-      {/* Back */}
+    <div className="container-custom py-8 max-w-4xl">
+      {/* Back Button */}
       <Link
         href="/events"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-sage-400 hover:text-sage-500 transition mb-6"
+        className="inline-flex items-center gap-2 text-sm font-medium text-text-muted hover:text-primary transition mb-6 group"
       >
-        <ArrowLeft className="w-4 h-4" />
-        Retour aux événements
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition" />
+        Back to Events
       </Link>
 
-      {/* Banner */}
-      <div className="">
-      <div className="relative h-40 rounded-2xl overflow-hidden mb-[-36px] bg-gradient-to-br from-sage-800 to-mint-500">
-        <div className="absolute inset-0 opacity-[0.07]"
+      {/* Hero Banner */}
+      <div className="relative h-48 rounded-xl overflow-hidden mb-[-32px] bg-gradient-sage">
+        {/* Subtle pattern */}
+        <div className="absolute inset-0 opacity-5"
           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")` }}
         />
-        {live && (
-          <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-live text-white text-xs font-bold px-3 py-1.5 rounded-full">
-            <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
-            LIVE NOW
+        
+        {/* Live Badge */}
+        {isLive && (
+          <div className="absolute bottom-4 left-4">
+            <span className="live-badge">
+              LIVE NOW
+            </span>
           </div>
         )}
       </div>
 
-      {/* Event card */}
-      <div className="relative z-10 bg-warm-white border-[1.5px] border-clay rounded-2xl px-6 pt-12 pb-6 mb-5">
-        <h1 className="text-2xl font-extrabold text-sage-800 tracking-tight mb-3 leading-tight">
+      {/* Event Card */}
+      <div className="relative z-10 card p-6 pt-12">
+        {/* Title */}
+        <h1 className="text-2xl md:text-3xl font-display font-bold text-text tracking-tight mb-3 leading-tight">
           {event.title}
         </h1>
 
+        {/* Description */}
         {event.description && (
-          <p className="text-sm text-sage-400 leading-relaxed mb-5">
+          <p className="text-sm text-text-muted leading-relaxed mb-5">
             {event.description}
           </p>
         )}
 
-        <div className="flex flex-col gap-2.5">
-          <span className="inline-flex items-center gap-2 text-sm text-sage-500 font-medium">
+        {/* Event Info */}
+        <div className="flex flex-wrap gap-x-5 gap-y-3 pb-4 border-b border-border">
+          <div className="inline-flex items-center gap-2 text-sm text-text-muted">
             <Calendar className="w-4 h-4 text-primary flex-shrink-0" />
             {formatDate(event.startDate)}
-          </span>
-          <span className="inline-flex items-center gap-2 text-sm text-sage-500 font-medium">
+          </div>
+          <div className="inline-flex items-center gap-2 text-sm text-text-muted">
             <Clock className="w-4 h-4 text-primary flex-shrink-0" />
-            {formatTime(event.startDate)} – {formatTime(event.endDate)}
-          </span>
+            {formatTime(event.startDate)} — {formatTime(event.endDate)}
+          </div>
           {event.location && (
-            <span className="inline-flex items-center gap-2 text-sm text-sage-500 font-medium">
+            <div className="inline-flex items-center gap-2 text-sm text-text-muted">
               <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
               {event.location}
-            </span>
+            </div>
           )}
+          <div className="inline-flex items-center gap-2 text-sm text-text-dim">
+            <Clock className="w-4 h-4 text-text-dim flex-shrink-0" />
+            Duration: {duration}
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="flex gap-8 pt-4">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-primary">{event.totalSessions}</p>
+            <p className="text-xs text-text-muted">Sessions</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-primary">{event.totalQuestions}</p>
+            <p className="text-xs text-text-muted">Questions</p>
+          </div>
         </div>
       </div>
-      </div>
 
-      {/* Navigation buttons */}
-      <div className="flex justify-between gap-3">
-        {/* Sessions */}
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row gap-4 mt-6">
         <Link
           href={`/events/${id}/sessions`}
-          className="group flex items-center justify-between bg-warm-white border-[1.5px] border-clay rounded-xl px-5 py-4 hover:border-sage-400 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-8px_rgba(45,106,79,.15)] transition-all duration-150"
+          className="flex items-center justify-between bg-bg-surface border border-border rounded-xl px-5 py-4 hover:border-primary/50 hover:bg-bg-surface/80 transition-all duration-200 flex-1 group"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-sage-50 border-[1.5px] border-sage-100 flex items-center justify-center flex-shrink-0">
-              <Layers className="w-5 h-5 text-sage-500" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+              <Layers className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <div className="text-sm font-bold text-sage-800">Voir les sessions</div>
-              <div className="text-xs text-sage-400 mt-0.5">
-                {event.sessions?.length ?? 0} session(s) au programme
+              <div className="text-sm font-bold text-text">View Sessions</div>
+              <div className="text-xs text-text-muted mt-0.5">
+                {event.sessions?.length ?? 0} session(s) in program
               </div>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-sage-300 group-hover:text-sage-500 group-hover:translate-x-0.5 transition-all" />
+          <ChevronRight className="w-5 h-5 text-text-dim group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
         </Link>
 
-        {/* Speakers */}
         <Link
           href={`/events/${id}/speakers`}
-          className="group flex items-center justify-between bg-warm-white border-[1.5px] border-clay rounded-xl px-5 py-4 hover:border-sage-400 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-8px_rgba(45,106,79,.15)] transition-all duration-150"
+          className="flex items-center justify-between bg-bg-surface border border-border rounded-xl px-5 py-4 hover:border-primary/50 hover:bg-bg-surface/80 transition-all duration-200 flex-1 group"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-sage-50 border-[1.5px] border-sage-100 flex items-center justify-center flex-shrink-0">
-              <Users className="w-5 h-5 text-sage-500" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+              <Users className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <div className="text-sm font-bold text-sage-800">Voir les speakers</div>
-              <div className="text-xs text-sage-400 mt-0.5">
-                Intervenants de cet événement
+              <div className="text-sm font-bold text-text">View Speakers</div>
+              <div className="text-xs text-text-muted mt-0.5">
+                Event speakers
               </div>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-sage-300 group-hover:text-sage-500 group-hover:translate-x-0.5 transition-all" />
+          <ChevronRight className="w-5 h-5 text-text-dim group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
         </Link>
       </div>
     </div>

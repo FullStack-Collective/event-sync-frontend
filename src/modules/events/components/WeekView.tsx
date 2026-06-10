@@ -2,17 +2,20 @@
 
 import Link from 'next/link';
 import { Event } from '@/modules/events/types/event.types';
+import { parseUTCDate, formatUTCDate, isLiveUTC, getDaysDiff } from '@/shared/utils/format-date';
 
 interface WeekViewProps {
   events: Event[];
   currentWeek: Date;
-  onWeekChange: (d: Date) => void;
+  onWeekChange: (newWeek: Date) => void;
 }
 
 const getWeekDays = (weekStart: Date): Date[] => {
   const start = new Date(weekStart);
-  const diff = (start.getDay() + 6) % 7;
+  const dayOfWeek = start.getDay();
+  const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
   start.setDate(start.getDate() - diff);
+  
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(start);
     d.setDate(start.getDate() + i);
@@ -20,87 +23,163 @@ const getWeekDays = (weekStart: Date): Date[] => {
   });
 };
 
-const getEventStyle = (event: Event) => {
-  const now = Date.now();
-  const start = new Date(event.startDate).getTime();
-  const end = new Date(event.endDate).getTime();
-  if (now >= start && now <= end)
-    return { classes: 'bg-error/15 border-error text-red-700', isLive: true };
-  const diff = Math.ceil((start - now) / (1000 * 60 * 60 * 24));
-  if (diff > 0 && diff <= 3)
-    return { classes: 'bg-ochre-100 border-ochre-400 text-ochre-700', isLive: false };
-  return { classes: 'bg-sage-50 border-sage-300 text-sage-700', isLive: false };
+const formatDate = (date: Date): string => {
+  return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const WeekView = ({ events, currentWeek, onWeekChange }: WeekViewProps) => {
+/**
+ * Get event style based on status using Sage Green palette
+ */
+const getEventStyle = (event: Event) => {
+  const diffDays = getDaysDiff(event.startDate);
+  const isLive = isLiveUTC(event.startDate, event.endDate);
+  
+  // LIVE EVENT - Live green
+  if (isLive) {
+    return { 
+      classes: 'bg-live/15 border-l-[3px] border-live text-live hover:bg-live/25', 
+      isLive: true 
+    };
+  }
+  
+  // Today but not started yet - Accent (Ochre)
+  if (diffDays === 0) {
+    return { 
+      classes: 'bg-accent/15 border-l-[3px] border-accent text-accent hover:bg-accent/25', 
+      isLive: false 
+    };
+  }
+  
+  // Within next 7 days - Warning (Ochre lighter)
+  if (diffDays <= 7 && diffDays > 0) {
+    return { 
+      classes: 'bg-warning/10 border-l-[3px] border-warning text-warning hover:bg-warning/20', 
+      isLive: false 
+    };
+  }
+  
+  // Far future (> 7 days) - Secondary (Mint)
+  if (diffDays > 7) {
+    return { 
+      classes: 'bg-secondary/10 border-l-[3px] border-secondary text-secondary hover:bg-secondary/20', 
+      isLive: false 
+    };
+  }
+  
+  // Past event - Muted text
+  return { 
+    classes: 'bg-text-muted/10 border-l-[3px] border-text-muted text-text-muted hover:bg-text-muted/20', 
+    isLive: false 
+  };
+};
+
+export const WeekView = ({ events, currentWeek }: WeekViewProps) => {
   const weekDays = getWeekDays(currentWeek);
   const todayStr = new Date().toDateString();
 
-  const getEventsForDay = (day: Date) => {
-     const year = day.getFullYear();
-     const month = day.getMonth();
-     const date = day.getDate();
+  const getEventsForDay = (day: Date): Event[] => {
+    const dayYear = day.getFullYear();
+    const dayMonth = day.getMonth();
+    const dayDate = day.getDate();
 
-     return events.filter((e) => {
-      const eventDate = new Date(e.startDate);
+    return events.filter((event) => {
+      const eventDate = parseUTCDate(event.startDate);
       return (
-        eventDate.getFullYear() == year &&
-        eventDate.getMonth() == month &&
-        eventDate.getDate() == date
-        );
-     });
+        eventDate.getFullYear() === dayYear &&
+        eventDate.getMonth() === dayMonth &&
+        eventDate.getDate() === dayDate
+      );
+    });
+  };
+
+  const isWeekend = (date: Date): boolean => {
+    const dayOfWeek = date.getDay();
+    return dayOfWeek === 0 || dayOfWeek === 6;
   };
 
   return (
-    <div className="w-full rounded-lg overflow-hidden border-[1.5px] border-white animate-[fadeUp_.4s_cubic-bezier(.2,.9,.4,1)_both]">
-      <div className="grid grid-cols-7 bg-gray-400 border-b-[1.5px] border-white text-sage-800">
-        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((name, i) => (
-          <div
-            key={name}
-            className={`py-2.5 text-center border-r border-white last:border-r-0 ${i >= 5 ? 'text-sage-600' : 'text-sage-600'}`}
-          >
-            <div className="text-[11px] font-bold tracking-widest uppercase">{name}</div>
-            <div className="text-xs text-sage-800 mt-0.5">
-              {weekDays[i].toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
+    <div className="w-full">
+      <div className="grid grid-cols-7 gap-3">
+        {/* Day Headers */}
+        {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((day, idx) => {
+          const isWeekendDay = idx >= 5;
+          return (
+            <div
+              key={day}
+              className={`text-center py-2 text-xs font-bold tracking-wider border-b ${
+                isWeekendDay 
+                  ? 'text-text-muted border-border' 
+                  : 'text-text-dim border-border'
+              }`}
+            >
+              {day}
+              <div className="text-[10px] mt-1 font-normal text-text-dim">
+                {formatDate(weekDays[idx])}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          );
+        })}
 
-      <div className="grid grid-cols-7 bg-gray-300">
+        {/* Day Cells */}
         {weekDays.map((day, idx) => {
-          const isToday = day.toDateString() === todayStr;
           const dayEvents = getEventsForDay(day);
+          const isToday = day.toDateString() === todayStr;
+          const isWeekendDay = isWeekend(day);
+          
           return (
             <div
               key={idx}
-              className={[
-                'min-h-[120px] p-1.5 border-r border-b border-clay last:border-r-0 transition-colors',
-                isToday
-                  ? 'bg-gray-100  outline-sage-500 outline-offset-[-2px]'
-                  : 'bg-gray-200 hover:bg-sage-50/50',
-              ].join(' ')}
+              className={`min-h-[140px] p-2 rounded-xl transition-all duration-200 ${
+                isToday 
+                  ? 'bg-primary/10 ring-1 ring-primary/30' 
+                  : 'bg-bg hover:bg-bg-surface/30'
+              }`}
             >
-              <div className="space-y-1">
-                {dayEvents.map((event) => {
-                  const { classes, isLive } = getEventStyle(event);
-                  return (
-                    <Link
-                      key={event.id}
-                      href={`/events/${event.id}`}
-                      className={`block p-1.5 rounded-[4px] text-xs border font-semibold transition-transform hover:scale-[1.03] ${classes}`}
-                    >
-                      <div className="flex items-center gap-1 truncate">
-                        {isLive && <span className="w-1.5 h-1.5 rounded-full bg-error flex-shrink-0 animate-ping" />}
-                        <span className="truncate">{event.title}</span>
-                      </div>
-                      <div className="text-[10px] opacity-60 mt-0.5">
-                        {new Date(event.startDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-                      </div>
-                    </Link>
-                  );
-                })}
+              {/* Day indicator */}
+              <div className={`text-right text-[10px] mb-2 font-mono ${
+                isToday ? 'text-primary' : isWeekendDay ? 'text-text-muted' : 'text-text-dim'
+              }`}>
+                {isToday && <span className="mr-1">●</span>}
+              </div>
+              
+              {/* Events list */}
+              <div className="space-y-1.5">
+                {dayEvents.length === 0 ? (
+                  <div className="text-center text-text-dim text-[10px] py-2">
+                    —
+                  </div>
+                ) : (
+                  dayEvents.map((event) => {
+                    const { classes, isLive } = getEventStyle(event);
+                    const eventTime = formatUTCDate(event.startDate, 'time');
+                    
+                    return (
+                      <Link
+                        key={event.id}
+                        href={`/events/${event.id}`}
+                        className={`block px-2 py-1.5 rounded-md text-[11px] font-medium transition-all duration-200 hover:translate-x-0.5 ${classes}`}
+                      >
+                        <div className="flex items-center gap-1.5">
+                          {/* Live indicator */}
+                          {isLive && (
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-live opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-live"></span>
+                            </span>
+                          )}
+                          {/* Event time */}
+                          <span className="text-[10px] opacity-70 font-mono">
+                            {eventTime}
+                          </span>
+                          {/* Event title */}
+                          <span className="truncate flex-1">
+                            {event.title}
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })
+                )}
               </div>
             </div>
           );
