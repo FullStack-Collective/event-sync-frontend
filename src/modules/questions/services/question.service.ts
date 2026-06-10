@@ -1,6 +1,6 @@
 import { Question, CreateQuestionPayload } from "../types/question.types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:300/api";
 
 export const questionService = {
   async getBySession(sessionId: string): Promise<Question[]> {
