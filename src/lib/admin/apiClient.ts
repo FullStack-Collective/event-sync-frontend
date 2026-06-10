@@ -28,7 +28,6 @@ export const dataProvider = {
       url += `&sortBy=${field}&sortOrder=${order.toLowerCase()}`;
     }
     
-    // Gestion des filtres spécifiques
     if (filter.status) {
       url += `&status=${filter.status}`;
     }
@@ -38,7 +37,6 @@ export const dataProvider = {
     
     const { json } = await httpClient(url);
     
-    // Adaptation de la réponse pour React Admin
     return {
       data: json.data.map((item: any) => ({ id: item.id, ...item })),
       total: json.pagination?.total || json.data?.length || 0,
