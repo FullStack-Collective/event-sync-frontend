@@ -48,7 +48,6 @@ export const authProvider: AuthProvider = {
         });
       }
     } catch (error) {
-      // Ignore logout errors
     } finally {
       removeAdminToken();
     }
@@ -60,7 +59,6 @@ export const authProvider: AuthProvider = {
       return Promise.reject();
     }
     
-    // Optionnel: Vérifier que le token est encore valide
     try {
       const token = getAdminToken();
       const response = await fetch(`${API_URL}/api/auth/verify`, {
@@ -76,7 +74,7 @@ export const authProvider: AuthProvider = {
       
       return Promise.resolve();
     } catch {
-      return Promise.resolve(); // On assume que le token est valide
+      return Promise.resolve();
     }
   },
   
