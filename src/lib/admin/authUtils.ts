@@ -3,6 +3,7 @@ const USER_KEY = 'admin_user';
 
 export const saveAdminToken = (token: string) => {
   localStorage.setItem(TOKEN_KEY, token);
+  saveAdminTokenToCookie(token);
 };
 
 export const getAdminToken = (): string | null => {
@@ -15,6 +16,7 @@ export const getAdminToken = (): string | null => {
 export const removeAdminToken = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  removeAdminTokenFromCookie();
 };
 
 export const saveAdminUser = (user: any) => {
@@ -31,4 +33,12 @@ export const getAdminUser = () => {
 
 export const isAuthenticated = (): boolean => {
   return !!getAdminToken();
+};
+
+export const saveAdminTokenToCookie = (token: string) => {
+  document.cookie = `admin_token=${token}; path=/; max-age=86400; SameSite=Strict`;
+};
+
+export const removeAdminTokenFromCookie = () => {
+  document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 };
