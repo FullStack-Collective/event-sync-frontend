@@ -1,26 +1,30 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { authProvider } from '@/lib/admin/authProvider';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { authProvider } from "@/providers/authProvider";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
       await authProvider.login({ email, password });
-      router.push('/admin/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Login failed. Please check your credentials.');
+      const token = localStorage.getItem("token");
+      if (token) {
+        document.cookie = `admin-token=${token}; path=/; max-age=86400`;
+      }
+      router.push("/admin");
+    } catch (err) {
+      setError("Email ou mot de passe incorrect");
     } finally {
       setLoading(false);
     }
@@ -30,15 +34,14 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-bg">
       <div className="card p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-sage rounded-2xl rotate-45 mx-auto mb-4" />
           <h1 className="text-2xl font-display font-bold text-gradient-primary">
-            Admin Access
+            Admin Login
           </h1>
           <p className="text-text-muted text-sm mt-2">
-            Enter your credentials to access the dashboard
+            Accès réservé aux administrateurs
           </p>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-text text-sm font-medium mb-2">
@@ -48,53 +51,44 @@ export default function AdminLoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg bg-bg-surface border border-border text-text focus:border-primary focus:outline-none transition-colors"
+              className="w-full px-4 py-2 bg-bg-surface border border-border rounded-lg focus:outline-none focus:border-primary transition-colors"
               placeholder="admin@eventsync.com"
               required
-              disabled={loading}
             />
           </div>
-          
+
           <div>
             <label className="block text-text text-sm font-medium mb-2">
-              Password
+              Mot de passe
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg bg-bg-surface border border-border text-text focus:border-primary focus:outline-none transition-colors"
+              className="w-full px-4 py-2 bg-bg-surface border border-border rounded-lg focus:outline-none focus:border-primary transition-colors"
               placeholder="••••••••"
               required
-              disabled={loading}
             />
           </div>
-          
+
           {error && (
-            <div className="bg-error/10 border border-error/20 rounded-lg p-3">
-              <p className="text-error text-sm text-center">{error}</p>
+            <div className="bg-error/10 text-error text-sm p-3 rounded-lg">
+              {error}
             </div>
           )}
-          
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-primary py-2 flex items-center justify-center gap-2"
+            className="w-full btn-primary py-2 disabled:opacity-50"
           >
-            {loading ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Connecting...
-              </>
-            ) : (
-              'Access Dashboard'
-            )}
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
         </form>
-        
-        <div className="mt-6 pt-6 border-t border-border text-center">
+
+        <div className="text-center mt-6">
           <p className="text-text-muted text-xs">
-            Secure administrator area. Unauthorized access is prohibited.
+            URL privée - Accès restreint
           </p>
         </div>
       </div>
