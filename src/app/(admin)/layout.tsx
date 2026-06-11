@@ -1,42 +1,27 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { isAuthenticated } from '@/lib/admin/authUtils';
+import { Admin, Resource, ListGuesser, EditGuesser, ShowGuesser } from "react-admin";
+import { authProvider } from "@/providers/authProvider";
+import { 
+  eventDataProvider, 
+  sessionDataProvider, 
+  speakerDataProvider, 
+  roomDataProvider,
+  questionDataProvider 
+} from "@/providers";
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (pathname === '/admin/login') {
-      setIsLoading(false);
-      return;
-    }
-    
-    const checkAuth = async () => {
-      if (!isAuthenticated()) {
-        router.replace('/admin/login');
-      } else {
-        setIsLoading(false);
-      }
-    };
-    
-    checkAuth();
-  }, [pathname, router]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-bg">
-        <div className="w-12 h-12 border-3 border-primary/30 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  return <>{children}</>;
+export default function AdminLayout() {
+  return (
+    <Admin 
+      authProvider={authProvider}
+      dataProvider={eventDataProvider}
+      basename="/admin"
+    >
+      <Resource name="events" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
+      <Resource name="sessions" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
+      <Resource name="speakers" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
+      <Resource name="rooms" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
+      <Resource name="questions" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
+    </Admin>
+  );
 }
