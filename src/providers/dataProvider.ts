@@ -22,20 +22,27 @@ export const createDataProvider = (resource: string): DataProvider => {
   const baseUrl = `${API_URL}/api/${resource}`;
 
   return {
-    getList: async (resource, params) => {
-      const { page, perPage } = params.pagination;
-      const { field, order } = params.sort;
-      const filters = params.filter;
+    getList: async (resourceName, params) => {
+      const page = params.pagination?.page || 1;
+      const perPage = params.pagination?.perPage || 10;
+      const field = params.sort?.field || "id";
+      const order = params.sort?.order || "ASC";
+      const filters = params.filter || {};
 
       const query = new URLSearchParams({
         page: page.toString(),
         limit: perPage.toString(),
         sortBy: field,
         sortOrder: order.toLowerCase(),
-        ...filters,
       });
 
-      const url = `${baseUrl}?${query}`;
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          query.append(key, String(value));
+        }
+      });
+
+      const url = `${baseUrl}?${query.toString()}`;
       const { json } = await httpClient(url);
 
       return {
@@ -44,25 +51,28 @@ export const createDataProvider = (resource: string): DataProvider => {
       };
     },
 
-    getOne: async (resource, params) => {
+    getOne: async (resourceName, params) => {
       const { json } = await httpClient(`${baseUrl}/${params.id}`);
       return { data: json.data || json };
     },
 
-    getMany: async (resource, params) => {
+    getMany: async (resourceName, params) => {
       const promises = params.ids.map(id => httpClient(`${baseUrl}/${id}`));
       const responses = await Promise.all(promises);
       return { data: responses.map(r => r.json.data || r.json) };
     },
 
-    getManyReference: async (resource, params) => {
+    getManyReference: async (resourceName, params) => {
       const { target, id } = params;
-      const url = `${baseUrl}?${target}=${id}`;
+      const page = params.pagination?.page || 1;
+      const perPage = params.pagination?.perPage || 10;
+      
+      const url = `${baseUrl}?${target}=${id}&page=${page}&limit=${perPage}`;
       const { json } = await httpClient(url);
       return { data: json.data || json, total: json.data?.length || 0 };
     },
 
-    create: async (resource, params) => {
+    create: async (resourceName, params) => {
       const { json } = await httpClient(baseUrl, {
         method: "POST",
         body: JSON.stringify(params.data),
@@ -70,7 +80,7 @@ export const createDataProvider = (resource: string): DataProvider => {
       return { data: json.data || json };
     },
 
-    update: async (resource, params) => {
+    update: async (resourceName, params) => {
       const { json } = await httpClient(`${baseUrl}/${params.id}`, {
         method: "PUT",
         body: JSON.stringify(params.data),
@@ -78,7 +88,7 @@ export const createDataProvider = (resource: string): DataProvider => {
       return { data: json.data || json };
     },
 
-    updateMany: async (resource, params) => {
+    updateMany: async (resourceName, params) => {
       const promises = params.ids.map(id =>
         httpClient(`${baseUrl}/${id}`, {
           method: "PUT",
@@ -89,14 +99,14 @@ export const createDataProvider = (resource: string): DataProvider => {
       return { data: responses.map(r => r.json.data?.id || r.json.id) };
     },
 
-    delete: async (resource, params) => {
+    delete: async (resourceName, params) => {
       const { json } = await httpClient(`${baseUrl}/${params.id}`, {
         method: "DELETE",
       });
       return { data: json.data || json };
     },
 
-    deleteMany: async (resource, params) => {
+    deleteMany: async (resourceName, params) => {
       const promises = params.ids.map(id =>
         httpClient(`${baseUrl}/${id}`, { method: "DELETE" })
       );
