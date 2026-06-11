@@ -11,6 +11,7 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export default function AdminLoginPage() {
         await authProvider.checkAuth({});
         router.push("/admin");
       } catch {
+        setIsChecking(false);
       }
     };
     checkAuth();
@@ -39,6 +41,14 @@ export default function AdminLoginPage() {
     }
   };
 
+  if (isChecking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-bg via-bg-surface to-bg relative overflow-hidden">
       {/* Background decoration */}
@@ -49,7 +59,6 @@ export default function AdminLoginPage() {
       </div>
 
       <div className="relative z-10 w-full max-w-md px-4">
-        {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-sage rounded-2xl rotate-6 mb-4">
             <Shield className="w-8 h-8 text-white -rotate-6" />
@@ -62,10 +71,8 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        {/* Login Card */}
         <div className="card p-8 shadow-2xl border border-border/50">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
             <div>
               <label className="block text-text text-sm font-medium mb-2">
                 Email
@@ -86,7 +93,6 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
               <label className="block text-text text-sm font-medium mb-2">
                 Mot de passe
@@ -118,7 +124,6 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="bg-error/10 border border-error/20 text-error text-sm p-3 rounded-lg flex items-center gap-2 animate-fade-in">
                 <div className="w-1.5 h-1.5 bg-error rounded-full" />
@@ -126,7 +131,6 @@ export default function AdminLoginPage() {
               </div>
             )}
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -146,7 +150,6 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Footer */}
           <div className="mt-6 pt-6 border-t border-border text-center">
             <p className="text-text-muted text-xs">
               URL privée - Accès restreint

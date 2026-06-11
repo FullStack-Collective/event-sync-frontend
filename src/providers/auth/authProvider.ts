@@ -46,32 +46,44 @@ export const authProvider: AuthProvider = {
     return Promise.resolve();
   },
 
-  checkAuth: async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return Promise.reject();
-    }
+// src/providers/auth/authProvider.ts (vérifie cette méthode)
 
-    try {
-      const response = await fetch(`${API_URL}/api/auth/verify`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+checkAuth: async (params: any) => {
+  const token = localStorage.getItem("token");
+  console.log('🔐 checkAuth - token présent:', !!token);
+  
+  if (!token) {
+    console.log('❌ checkAuth: pas de token');
+    return Promise.reject();
+  }
 
-      const data = await response.json();
+  try {
+    console.log('🔐 Vérification token auprès du backend...');
+    const response = await fetch(`${API_URL}/api/auth/verify`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-      if (!response.ok || !data.valid) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        return Promise.reject();
-      }
+    const data = await response.json();
+    console.log('🔐 Réponse vérification:', { ok: response.ok, valid: data.valid });
 
-      return Promise.resolve();
-    } catch (error) {
+    if (!response.ok || !data.valid) {
+      console.log('❌ checkAuth: token invalide');
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      document.cookie = "admin-token=; path=/; max-age=0";
       return Promise.reject();
     }
-  },
+
+    console.log('✅ checkAuth: token valide');
+    return Promise.resolve();
+  } catch (error) {
+    console.error('❌ checkAuth erreur:', error);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    document.cookie = "admin-token=; path=/; max-age=0";
+    return Promise.reject();
+  }
+},
 
   checkError: async (error: any) => {
     const status = error.status;
