@@ -28,17 +28,21 @@ export const authProvider: AuthProvider = {
 
   logout: async () => {
     try {
-      await fetch(`${API_URL}/api/auth/logout`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const token = localStorage.getItem("token");
+      if (token) {
+        await fetch(`${API_URL}/api/auth/logout`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      document.cookie = "admin-token=; path=/; max-age=0";
     }
     return Promise.resolve();
   },
@@ -70,6 +74,19 @@ export const authProvider: AuthProvider = {
       localStorage.removeItem("user");
       return Promise.reject();
     }
+  },
+
+  checkError: async (error: any) => {
+    const status = error.status;
+    
+    if (status === 401 || status === 403) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      document.cookie = "admin-token=; path=/; max-age=0";
+      return Promise.reject();
+    }
+    
+    return Promise.resolve();
   },
 
   getPermissions: async () => {
