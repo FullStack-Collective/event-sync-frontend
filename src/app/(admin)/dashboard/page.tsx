@@ -1,7 +1,7 @@
 'use client';
 
 import { Admin, Resource } from 'react-admin';
-import { dataProvider } from '@/lib/admin/apiClient';
+import { dataProvider } from '@/lib/admin/dataProvider';
 import { authProvider } from '@/lib/admin/authProvider';
 import Dashboard from './components/Dashboard';
 import { EventList, EventCreate, EventEdit, EventShow } from './resources/events';
