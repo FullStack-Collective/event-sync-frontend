@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail, Shield } from "lucide-react";
 import { authProvider } from "@/providers";
+import Image from "next/image";
+import logo from "@/app/(public)/logo/Logo.png";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -60,12 +62,17 @@ export default function AdminLoginPage() {
 
       <div className="relative z-10 w-full max-w-md px-4">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-sage rounded-2xl rotate-6 mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16">
             <Shield className="w-8 h-8 text-white -rotate-6" />
           </div>
-          <h1 className="text-3xl font-display font-bold text-gradient-primary">
-            EventSync Admin
-          </h1>
+          <div className="flex items-center justify-center">
+            <Image
+              src={logo}
+              alt="Logo"
+              width={150}
+              height={75}
+            />
+          </div>
           <p className="text-text-muted text-sm mt-2">
             Access restricted to administrators
           </p>
