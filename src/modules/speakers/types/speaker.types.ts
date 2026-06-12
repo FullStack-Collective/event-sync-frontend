@@ -11,16 +11,8 @@ export const SpeakerSchema = z.object({
   facebook: z.string().nullable().optional(),
 });
 
-const SpeakerSessionSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  description: z.string().nullable().optional(),
-  scheduledAt: z.string(), 
-  eventId: z.number(),     
-});
-
 export const SpeakerDetailedSchema = SpeakerSchema.extend({
-  sessions: z.array(SpeakerSessionSchema).default([]),
+  sessions: z.array(z.any()).default([]), 
 });
 
 export const SpeakerArraySchema = z.array(SpeakerSchema);

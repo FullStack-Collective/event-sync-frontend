@@ -4,14 +4,14 @@ import { Speaker, SpeakerDetailed, SpeakerArraySchema, SpeakerDetailedSchema } f
 export const SpeakerService = {
 
   getAll: async (): Promise<Speaker[]> => {
-    return apiFetch<Speaker[]>('api/speakers', {
+    return apiFetch<Speaker[]>('/api/speakers', {
       schema: SpeakerArraySchema,
       next: { revalidate: 3600 }
     });
   },
 
   getById: async (id: string): Promise<SpeakerDetailed> => {
-    return apiFetch<SpeakerDetailed>(`api/speakers/${id}`, {
+    return apiFetch<SpeakerDetailed>(`/api/speakers/${id}`, {
       schema: SpeakerDetailedSchema,
       next: { revalidate: 60 }
     });
