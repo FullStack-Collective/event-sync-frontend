@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail, Shield } from "lucide-react";
 import { authProvider } from "@/providers";
+import Image from "next/image";
+import logo from "@/app/(public)/logo/Logo.png";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -35,7 +37,7 @@ export default function AdminLoginPage() {
       await authProvider.login({ email, password });
       router.push("/admin");
     } catch (err) {
-      setError("Email ou mot de passe incorrect");
+      setError("Incorrect email address or password");
     } finally {
       setLoading(false);
     }
@@ -60,14 +62,19 @@ export default function AdminLoginPage() {
 
       <div className="relative z-10 w-full max-w-md px-4">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-sage rounded-2xl rotate-6 mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16">
             <Shield className="w-8 h-8 text-white -rotate-6" />
           </div>
-          <h1 className="text-3xl font-display font-bold text-gradient-primary">
-            EventSync Admin
-          </h1>
+          <div className="flex items-center justify-center">
+            <Image
+              src={logo}
+              alt="Logo"
+              width={150}
+              height={75}
+            />
+          </div>
           <p className="text-text-muted text-sm mt-2">
-            Accès réservé aux administrateurs
+            Access restricted to administrators
           </p>
         </div>
 
@@ -95,7 +102,7 @@ export default function AdminLoginPage() {
 
             <div>
               <label className="block text-text text-sm font-medium mb-2">
-                Mot de passe
+                Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -139,12 +146,11 @@ export default function AdminLoginPage() {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Connexion...
+                  Connecting...
                 </>
               ) : (
                 <>
-                  Se connecter
-                  <Shield className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  Sign in
                 </>
               )}
             </button>
@@ -152,10 +158,10 @@ export default function AdminLoginPage() {
 
           <div className="mt-6 pt-6 border-t border-border text-center">
             <p className="text-text-muted text-xs">
-              URL privée - Accès restreint
+              Private URL - Access restricted
             </p>
             <p className="text-text-muted text-xs mt-2">
-              Contactez l'administrateur pour obtenir un accès
+              Contact the administrator to request access
             </p>
           </div>
         </div>
