@@ -151,7 +151,6 @@ export default function AdminLoginPage() {
               ) : (
                 <>
                   Sign in
-                  <Shield className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
