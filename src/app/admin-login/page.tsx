@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
       await authProvider.login({ email, password });
       router.push("/admin");
     } catch (err) {
-      setError("Email ou mot de passe incorrect");
+      setError("Incorrect email address or password");
     } finally {
       setLoading(false);
     }
@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
             EventSync Admin
           </h1>
           <p className="text-text-muted text-sm mt-2">
-            Accès réservé aux administrateurs
+            Access restricted to administrators
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
 
             <div>
               <label className="block text-text text-sm font-medium mb-2">
-                Mot de passe
+                Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -139,11 +139,11 @@ export default function AdminLoginPage() {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Connexion...
+                  Connecting...
                 </>
               ) : (
                 <>
-                  Se connecter
+                  Sign in
                   <Shield className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
@@ -152,10 +152,10 @@ export default function AdminLoginPage() {
 
           <div className="mt-6 pt-6 border-t border-border text-center">
             <p className="text-text-muted text-xs">
-              URL privée - Accès restreint
+              Private URL - Access restricted
             </p>
             <p className="text-text-muted text-xs mt-2">
-              Contactez l'administrateur pour obtenir un accès
+              Contact the administrator to request access
             </p>
           </div>
         </div>
