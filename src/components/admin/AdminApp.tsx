@@ -10,7 +10,6 @@ export default function AdminApp() {
     <Admin
       dataProvider={dataProvider}
       authProvider={authProvider}
-      basename="/admin/dashboard"
     >
       <Resource 
         name="events" 
