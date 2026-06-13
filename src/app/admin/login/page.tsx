@@ -30,6 +30,7 @@ export default function AdminLoginPage() {
 
       if (data.success && data.data?.token) {
         localStorage.setItem('admin_token', data.data.token);
+        document.cookie = `admin_token=${data.data.token}; path=/; max-age=86400`;
         router.push('/admin/dashboard');
       } else {
         setError('Email ou mot de passe incorrect');
