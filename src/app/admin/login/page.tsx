@@ -1,6 +1,7 @@
+// src/app/admin/login/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, LogIn } from 'lucide-react';
 
@@ -11,6 +12,14 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Rediriger si déjà connecté
+  useEffect(() => {
+    const token = localStorage.getItem('admin_token');
+    if (token) {
+      window.location.href = '/admin/dashboard';
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -18,9 +27,10 @@ export default function AdminLoginPage() {
 
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
-        headers: {
+        headers: { 
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
@@ -31,11 +41,13 @@ export default function AdminLoginPage() {
       if (data.success && data.data?.token) {
         localStorage.setItem('admin_token', data.data.token);
         document.cookie = `admin_token=${data.data.token}; path=/; max-age=86400`;
-        router.push('/admin/dashboard');
+        // Utiliser window.location pour une redirection forcée
+        window.location.href = '/admin/dashboard';
       } else {
-        setError('Email ou mot de passe incorrect');
+        setError(data.message || 'Email ou mot de passe incorrect');
       }
     } catch (err) {
+      console.error('Erreur:', err);
       setError('Erreur de connexion au serveur');
     } finally {
       setLoading(false);
@@ -102,7 +114,7 @@ export default function AdminLoginPage() {
             className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {loading ? (
-              'Connexion...'
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
                 Se connecter
@@ -113,8 +125,8 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="mt-6 text-center text-text-muted text-xs">
-          <p>Compte de démonstration:</p>
-          <p>admin@eventsync.com / admin123</p>
+          <p>Compte de démonstration :</p>
+          <p className="mt-1">admin@eventsync.com / admin123</p>
         </div>
       </div>
     </div>

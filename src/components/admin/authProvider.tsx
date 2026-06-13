@@ -1,3 +1,4 @@
+// src/components/admin/authProvider.ts
 import { AuthProvider } from 'react-admin';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -20,32 +21,14 @@ export const authProvider: AuthProvider = {
     return Promise.reject(new Error('Identifiants invalides'));
   },
 
-  logout: async () => {
+  logout: () => {
     localStorage.removeItem('admin_token');
     return Promise.resolve();
   },
 
-  checkAuth: async () => {
+  checkAuth: () => {
     const token = localStorage.getItem('admin_token');
-    
-    if (!token) {
-      return Promise.reject();
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/api/auth/verify`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      
-      if (response.ok) {
-        return Promise.resolve();
-      }
-      
-      localStorage.removeItem('admin_token');
-      return Promise.reject();
-    } catch {
-      return Promise.reject();
-    }
+    return token ? Promise.resolve() : Promise.reject();
   },
 
   checkError: (error) => {
@@ -56,19 +39,7 @@ export const authProvider: AuthProvider = {
     return Promise.resolve();
   },
 
-  getPermissions: async () => {
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-      return Promise.resolve('admin');
-    }
-    return Promise.reject();
-  },
+  getPermissions: () => Promise.resolve('admin'),
 
-  getIdentity: async () => {
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-      return Promise.resolve({ id: 'admin', fullName: 'Administrator' });
-    }
-    return Promise.reject();
-  },
+  getIdentity: () => Promise.resolve({ id: 'admin', fullName: 'Administrator' }),
 };
