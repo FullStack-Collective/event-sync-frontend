@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-sage">
       <div className="bg-bg-surface rounded-2xl shadow-2xl p-8 w-full max-w-md border border-border">
         <div className="text-center mb-8">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center">
             <Image
               src={logo}
               alt="Logo"
