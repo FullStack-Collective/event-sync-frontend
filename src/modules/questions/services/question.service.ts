@@ -1,15 +1,23 @@
 import { Question, CreateQuestionPayload } from "../types/question.types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:300/api";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ??
+  "http://localhost:5000";
+const API_URL = `${API_BASE}/api`;
 
 export const questionService = {
   async getBySession(sessionId: string): Promise<Question[]> {
     const res = await fetch(
       `${API_URL}/questions/sessions/${sessionId}/questions`,
-      { cache: "no-store" }
+      { cache: "no-store" },
     );
+
     if (!res.ok) throw new Error("Impossible de charger les questions");
-    return res.json();
+
+    const json = await res.json();
+
+    //  FIX: support deux formats
+    return json.data ?? json;
   },
 
   async create(payload: CreateQuestionPayload): Promise<Question> {
