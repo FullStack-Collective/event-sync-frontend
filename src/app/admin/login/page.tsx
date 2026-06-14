@@ -68,8 +68,8 @@ export default function AdminLoginPage() {
               height={75}
             />
           </div>
-        <p className="text-text-muted text-sm mt-2">
-            Connectez-vous à votre espace d'administration
+          <p className="text-text-muted text-sm mt-2">
+            Log in to your admin panel
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
 
           <div>
             <label className="block text-text text-sm font-medium mb-2">
-              Mot de passe
+              Password
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
@@ -123,17 +123,12 @@ export default function AdminLoginPage() {
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
-                Se connecter
+                Sign In
                 <LogIn className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
-
-        <div className="mt-6 text-center text-text-muted text-xs">
-          <p>Compte de démonstration :</p>
-          <p className="mt-1">admin@eventsync.com / admin123</p>
-        </div>
       </div>
     </div>
   );
