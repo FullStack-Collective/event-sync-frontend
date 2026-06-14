@@ -4,6 +4,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, LogIn } from 'lucide-react';
+import Image from "next/image";
+import logo from "@/app/(public)/logo/Logo.png";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -59,9 +61,14 @@ export default function AdminLoginPage() {
       <div className="bg-bg-surface rounded-2xl shadow-2xl p-8 w-full max-w-md border border-border">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-sage rounded-2xl rotate-45 mx-auto mb-4" />
-          <h1 className="text-2xl font-display font-bold text-gradient-primary">
-            EventSync Admin
-          </h1>
+            <div className="flex items-center gap-2">
+              <Image
+                src={logo}
+                alt="Logo"
+                width={150}
+                height={75}
+              />
+            </div>
           <p className="text-text-muted text-sm mt-2">
             Connectez-vous à votre espace d'administration
           </p>
