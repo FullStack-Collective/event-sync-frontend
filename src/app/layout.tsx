@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans, Syne, JetBrains_Mono } from "next/font/google";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import "./globals.css";
 
@@ -23,12 +22,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agora - Real-time event management",
-  description: "Platform for real-time event management and participant engagement",
-  icons: {
-    icon: "/favicon.ico?v=2",
-    shortcut: "/favicon.ico?v=2",
-  },
+  title: "EventSync - Gestion d'événements en temps réel",
+  description: "Plateforme de gestion d'événements et d'engagement des participants en temps réel",
 };
 
 export default function RootLayout({
