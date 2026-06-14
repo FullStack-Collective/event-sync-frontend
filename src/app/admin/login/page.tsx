@@ -4,6 +4,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, LogIn } from 'lucide-react';
+import Image from "next/image";
+import logo from "@/app/(public)/logo/Logo.png";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -58,12 +60,16 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-sage">
       <div className="bg-bg-surface rounded-2xl shadow-2xl p-8 w-full max-w-md border border-border">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-sage rounded-2xl rotate-45 mx-auto mb-4" />
-          <h1 className="text-2xl font-display font-bold text-gradient-primary">
-            EventSync Admin
-          </h1>
+          <div className="flex items-center justify-center">
+            <Image
+              src={logo}
+              alt="Logo"
+              width={150}
+              height={75}
+            />
+          </div>
           <p className="text-text-muted text-sm mt-2">
-            Connectez-vous à votre espace d'administration
+            Log in to your admin panel
           </p>
         </div>
 
@@ -87,7 +93,7 @@ export default function AdminLoginPage() {
 
           <div>
             <label className="block text-text text-sm font-medium mb-2">
-              Mot de passe
+              Password
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
@@ -117,17 +123,12 @@ export default function AdminLoginPage() {
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
-                Se connecter
+                Sign In
                 <LogIn className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
-
-        <div className="mt-6 text-center text-text-muted text-xs">
-          <p>Compte de démonstration :</p>
-          <p className="mt-1">admin@eventsync.com / admin123</p>
-        </div>
       </div>
     </div>
   );
