@@ -35,10 +35,10 @@ export default function AdminLoginPage({ redirectTo }: AdminLoginPageProps) {
         localStorage.setItem('admin_token', data.data.token);
         window.location.href = redirectTo || '/admin';
       } else {
-        setError(data.message || 'Email ou mot de passe incorrect');
+        setError(data.message || 'Incorrect email address or password');
       }
     } catch {
-      setError('Erreur de connexion au serveur');
+      setError('Error connecting to the server');
     } finally {
       setLoading(false);
     }
