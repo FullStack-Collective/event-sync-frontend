@@ -1,4 +1,3 @@
-// src/components/admin/AdminApp.tsx
 'use client';
 
 import { Admin, Resource, ListGuesser, EditGuesser, Create } from 'react-admin';
