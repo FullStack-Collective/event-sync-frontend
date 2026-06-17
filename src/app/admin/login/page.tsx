@@ -1,7 +1,4 @@
 // src/app/admin/login/page.tsx
-// This page is only used by React-Admin internally via loginPage= prop.
-// It must NOT use useLogin/useNotify — those hooks require React-Admin context
-// which isn't available when this route is accessed directly as a Next.js page.
 'use client';
 
 import { useState } from 'react';
@@ -12,7 +9,6 @@ import logo from '@/app/(public)/logo/Logo.png';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 interface AdminLoginPageProps {
-  // React-Admin passes these when used as loginPage=
   redirectTo?: string;
 }
 
@@ -38,7 +34,6 @@ export default function AdminLoginPage({ redirectTo }: AdminLoginPageProps) {
 
       if (data.success && data.data?.token) {
         localStorage.setItem('admin_token', data.data.token);
-        // Hard redirect so React-Admin re-initialises with the token in place
         window.location.href = redirectTo || '/admin';
       } else {
         setError(data.message || 'Email ou mot de passe incorrect');
