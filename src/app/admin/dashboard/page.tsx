@@ -10,7 +10,7 @@ const AdminApp = dynamic(
       <div className="min-h-screen flex items-center justify-center bg-gradient-sage">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-text-muted">Chargement de l'administration...</p>
+          <p className="text-text-muted">Loading administration...</p>
         </div>
       </div>
     )
