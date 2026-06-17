@@ -1,6 +1,4 @@
 // src/app/admin/page.tsx
-// React-Admin handles all redirects internally via authProvider.checkAuth().
-// This page just renders the app — no manual redirect needed.
 'use client';
 
 import dynamic from 'next/dynamic';
