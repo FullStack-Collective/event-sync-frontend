@@ -1,9 +1,7 @@
-// src/app/admin/dashboard/page.tsx
 'use client';
 
 import dynamic from 'next/dynamic';
 
-// Import dynamique de React Admin (SSR désactivé)
 const AdminApp = dynamic(
   () => import('@/components/admin/AdminApp'),
   { 

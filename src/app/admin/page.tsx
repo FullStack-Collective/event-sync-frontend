@@ -1,26 +1,19 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
-export default function AdminPage() {
-  const router = useRouter();
-  
-  useEffect(() => {
-    const token = localStorage.getItem('admin_token');
-    if (!token) {
-      router.push('/admin/login');
-    } else {
-      window.location.href = '/admin/dashboard';
-    }
-  }, [router]);
-  
-  return (
+const AdminApp = dynamic(() => import('@/components/admin/AdminApp'), {
+  ssr: false,
+  loading: () => (
     <div className="min-h-screen flex items-center justify-center bg-gradient-sage">
       <div className="text-center">
         <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-text-muted">Redirection...</p>
+        <p className="text-text-muted">Chargement...</p>
       </div>
     </div>
-  );
+  ),
+});
+
+export default function AdminPage() {
+  return <AdminApp />;
 }
