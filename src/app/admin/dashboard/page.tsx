@@ -3,7 +3,6 @@
 
 import dynamic from 'next/dynamic';
 
-// Import dynamique de React Admin (SSR désactivé)
 const AdminApp = dynamic(
   () => import('@/components/admin/AdminApp'),
   { 
