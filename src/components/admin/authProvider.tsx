@@ -15,6 +15,7 @@ export const authProvider: AuthProvider = {
 
     if (data.success && data.data?.token) {
       localStorage.setItem('admin_token', data.data.token);
+      document.cookie = `admin_token=${data.data.token}; path=/; max-age=86400`;
       return Promise.resolve();
     }
     
@@ -23,6 +24,7 @@ export const authProvider: AuthProvider = {
 
   logout: () => {
     localStorage.removeItem('admin_token');
+    document.cookie = 'admin_token=; path=/; max-age=0';
     return Promise.resolve();
   },
 
