@@ -12,8 +12,6 @@ export default function AdminApp() {
       dataProvider={dataProvider}
       authProvider={authProvider}
       loginPage={AdminLoginPage}
-      // No basename — React-Admin manages routes from the root of wherever
-      // it is mounted. The Next.js page at /admin renders it, that's enough.
     >
       <Resource
         name="events"
