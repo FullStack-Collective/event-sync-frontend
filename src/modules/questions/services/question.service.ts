@@ -1,32 +1,32 @@
 import { Question, CreateQuestionPayload } from "../types/question.types";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:300/api";
+import { apiClient, APIError } from "../../../shared/config/api.config";
 
 export const questionService = {
   async getBySession(sessionId: string): Promise<Question[]> {
-    const res = await fetch(
-      `${API_URL}/questions/sessions/${sessionId}/questions`,
-      { cache: "no-store" }
-    );
-    if (!res.ok) throw new Error("Impossible de charger les questions");
-    return res.json();
+    try {
+      return await apiClient.get<Question[]>(
+        `/api/questions/sessions/${sessionId}/questions`,
+      );
+    } catch (err: unknown) {
+      if (err instanceof APIError && err.status === 403) {
+        const payload: any = err.payload;
+        if (
+          payload &&
+          (payload.message === "SESSION_NOT_LIVE" ||
+            payload.code === "SESSION_NOT_LIVE")
+        ) {
+          throw new Error("La session n'est pas active");
+        }
+      }
+      throw err;
+    }
   },
 
   async create(payload: CreateQuestionPayload): Promise<Question> {
-    const res = await fetch(`${API_URL}/questions`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error("Erreur lors de l'envoi de la question");
-    return res.json();
+    return apiClient.post<Question>(`/api/questions`, payload);
   },
 
   async upvote(id: string): Promise<Question> {
-    const res = await fetch(`${API_URL}/questions/${id}/upvote`, {
-      method: "PUT",
-    });
-    if (!res.ok) throw new Error("Erreur lors de l'upvote");
-    return res.json();
+    return apiClient.put<Question>(`/api/questions/${id}/upvote`);
   },
 };
