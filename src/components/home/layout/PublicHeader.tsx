@@ -81,7 +81,7 @@ export function PublicHeader() {
           {/* CTA Button */}
           <div className="hidden md:block py-2">
             <Link href="/events" className="btn-primary">
-              See all events
+              Explore all events
               <span className="ml-2">→</span>
             </Link>
           </div>
