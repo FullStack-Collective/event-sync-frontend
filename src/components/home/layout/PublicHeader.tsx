@@ -2,20 +2,24 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import logo from "@/app/(public)/logo/Logo.png";
 
 const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Events", href: "#events" },
-  { label: "Speakers", href: "#speakers" },
-  { label: "About", href: "#about" },
+  { label: "Home", href: "#home", sectionId: "home" },
+  { label: "Events", href: "#events", sectionId: "events" },
+  { label: "Speakers", href: "#speakers", sectionId: "speakers" },
+  { label: "About", href: "#about", sectionId: "about" },
 ];
 
 export function PublicHeader() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,15 +29,35 @@ export function PublicHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSmoothScroll = (
+  useEffect(() => {
+    if (pathname === "/" && window.location.hash) {
+      const sectionId = window.location.hash.replace("#", "");
+      const element = document.getElementById(sectionId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, "", "/");
+        }, 150);
+      }
+    }
+  }, [pathname]);
+
+  const handleNavigation = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    href: string,
+    sectionId: string
   ) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
+
+    if (pathname === "/") {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href);
+      }
+    } else {
+      router.push(`/${href}`);
     }
   };
 
@@ -48,34 +72,39 @@ export function PublicHeader() {
       >
         <nav className="container-custom mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link
-            href="#home"
-            onClick={(e) => handleSmoothScroll(e, "#home")}
-            className="group relative z-10"
-          >
+          <Link href="/" className="group relative z-10">
             <div className="flex items-center gap-2">
               <Image
                 src={logo}
                 alt="Logo"
                 width={150}
                 height={75}
+                className="transition-transform duration-300 group-hover:scale-105"
               />
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => handleSmoothScroll(e, item.href)}
-                className="text-text-muted hover:text-primary transition-colors duration-200 font-medium relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-sage group-hover:w-full transition-all duration-300" />
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = 
+                pathname === "/" && 
+                window.location.hash === item.href;
+              
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavigation(e, item.href, item.sectionId)}
+                  className={`text-text-muted hover:text-primary transition-colors duration-200 font-medium relative group ${
+                    isActive ? "text-primary" : ""
+                  }`}
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-sage group-hover:w-full transition-all duration-300" />
+                </a>
+              );
+            })}
           </div>
 
           {/* CTA Button */}
@@ -112,13 +141,15 @@ export function PublicHeader() {
               <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => handleSmoothScroll(e, item.href)}
+                onClick={(e) => handleNavigation(e, item.href, item.sectionId)}
                 className="text-2xl font-display text-text hover:text-primary transition-colors"
               >
                 {item.label}
               </a>
             ))}
-            <button className="btn-primary mt-4">Explore all events</button>
+            <Link href="/events" className="btn-primary mt-4">
+              Explore all events
+            </Link>
           </div>
         </div>
       )}
