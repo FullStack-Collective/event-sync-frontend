@@ -118,7 +118,7 @@ export function PublicHeader() {
                 {item.label}
               </a>
             ))}
-            <button className="btn-primary mt-4">See all events</button>
+            <button className="btn-primary mt-4">Explore all events</button>
           </div>
         </div>
       )}
