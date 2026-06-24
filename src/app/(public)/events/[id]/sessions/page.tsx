@@ -68,7 +68,6 @@ export default async function SessionsPage({ params }: PageProps) {
 
   if (!event) notFound();
 
-  // tri chronologique + live en premier
   const sessions = [...sessionsRaw]
     .map((s) => ({ ...s, status: computeStatus(s) }))
     .sort((a, b) => {
@@ -188,15 +187,13 @@ export default async function SessionsPage({ params }: PageProps) {
                                         className="w-7 h-7 rounded-full border-2 border-bg-surface bg-bg-elevated overflow-hidden flex items-center justify-center text-[10px] font-semibold text-text-muted"
                                       >
                                         {sp.avatarUrl ? (
-                                          // eslint-disable-next-line @next/next/no-img-element
                                           <img
                                             src={sp.avatarUrl}
                                             alt={sp.name}
                                             className="w-full h-full object-cover"
                                           />
                                         ) : (
-                                          sp.name
-                                            .split(" ")
+                                          sp?.name?.split(" ") || []
                                             .map((p) => p[0])
                                             .slice(0, 2)
                                             .join("")
