@@ -66,10 +66,6 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-300">
-            <Link href="/events" className="btn-primary text-lg px-8 py-3 group">
-              Explore Events
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
             <Link href="#about"  className="btn-outline text-lg px-8 py-3">
               Learn More
             </Link>
