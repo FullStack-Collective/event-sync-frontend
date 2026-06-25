@@ -111,7 +111,7 @@ export default function EventsPage() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-16">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-[-2vw]">
 
       <div className="relative mb-3 ">
         <Search className="absolute left-3.5 top-1/2 ml-[25rem] -translate-y-1/2 w-4 h-4 text-sage-300 pointer-events-none" />
