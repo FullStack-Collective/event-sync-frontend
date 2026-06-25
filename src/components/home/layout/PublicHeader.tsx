@@ -19,7 +19,21 @@ export function PublicHeader() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
+
+  useEffect(() => {
+  const updateHash = () => {
+    setCurrentHash(window.location.hash);
+  };
+
+  updateHash();
+
+  window.addEventListener("hashchange", updateHash);
+
+  return () => {
+    window.removeEventListener("hashchange", updateHash);
+  };
+}, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,24 +56,28 @@ export function PublicHeader() {
     }
   }, [pathname]);
 
-  const handleNavigation = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-    sectionId: string
-  ) => {
-    e.preventDefault();
-    setIsMobileMenuOpen(false);
+const handleNavigation = (
+  e: React.MouseEvent<HTMLAnchorElement>,
+  href: string,
+  sectionId: string
+) => {
+  e.preventDefault();
+  setIsMobileMenuOpen(false);
 
-    if (pathname === "/") {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        window.history.pushState(null, "", href);
-      }
-    } else {
-      router.push(`/${href}`);
+  if (pathname === "/") {
+    const element = document.getElementById(sectionId);
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+
+      window.history.pushState(null, "", href);
+
+      setCurrentHash(href);
     }
-  };
+  } else {
+    router.push(`/${href}`);
+  }
+};
 
   return (
     <>
@@ -87,10 +105,9 @@ export function PublicHeader() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => {
-              const isActive = 
-                pathname === "/" && 
-                window.location.hash === item.href;
-              
+              const isActive =
+              pathname === "/" &&
+              currentHash === item.href;
               return (
                 <a
                   key={item.label}
