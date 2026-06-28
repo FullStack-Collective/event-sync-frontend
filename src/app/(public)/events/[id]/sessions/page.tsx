@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, Users, Radio } from "lucide-react";
+import {  Calendar, Users, Radio } from "lucide-react";
 import { eventService } from "@/modules/events/services/event.service";
 import { sessionService } from "@/modules/sessions/services/session.service";
 import { SessionList } from "@/modules/sessions/components/SessionList";
@@ -55,14 +54,6 @@ export default async function SessionsPage({ params }: PageProps) {
   return (
     <section className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
       <div className="w-full max-w-4xl">
-        <Link
-          href={`/events/${event.id}`}
-          className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text transition mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to the event
-        </Link>
-
         <header className="mb-10">
           <p className="text-xs uppercase tracking-widest text-primary/80">
             Session Schedule
