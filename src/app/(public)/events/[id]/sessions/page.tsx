@@ -55,7 +55,7 @@ export default async function SessionsPage({ params }: PageProps) {
   return (
     <section className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
       <div className="w-full max-w-4xl">
-         <Link
+        <Link
           href={`/events/${event.id}`}
           className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text transition mb-6"
         >
@@ -63,24 +63,13 @@ export default async function SessionsPage({ params }: PageProps) {
           Back to the event
         </Link>
 
-         <header className="mb-10">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <p className="text-xs uppercase tracking-widest text-primary/80">
-                Session Schedule
-              </p>
-              <h1 className="mt-3 text-4xl sm:text-5xl font-display font-bold text-text">
-                {event.title}
-              </h1>
-            </div>
-
-             <Link
-              href="/favorites"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-bg-surface text-sm text-text-muted hover:border-red-400/50 hover:text-red-400 transition mt-4 sm:mt-0"
-            >
-              ♥ My Favorites
-            </Link>
-          </div>
+        <header className="mb-10">
+          <p className="text-xs uppercase tracking-widest text-primary/80">
+            Session Schedule
+          </p>
+          <h1 className="mt-3 text-4xl sm:text-5xl font-display font-bold text-text">
+            {event.title}
+          </h1>
 
           <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-text-muted">
             <span className="inline-flex items-center gap-2">
@@ -89,18 +78,18 @@ export default async function SessionsPage({ params }: PageProps) {
             </span>
             <span className="inline-flex items-center gap-2">
               <Users className="w-4 h-4" />
-              {total} sessions
+              {total} session{total > 1 ? "s" : ""}
             </span>
             {liveCount > 0 && (
               <span className="inline-flex items-center gap-2 text-primary">
                 <Radio className="w-4 h-4 animate-pulse" />
-                {liveCount} live 
+                {liveCount} live
               </span>
             )}
           </div>
         </header>
 
-         <SessionList sessions={sessions} eventId={event.id} />
+        <SessionList sessions={sessions} eventId={event.id} />
       </div>
     </section>
   );
