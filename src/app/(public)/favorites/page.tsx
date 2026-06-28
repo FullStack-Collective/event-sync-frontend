@@ -1,7 +1,6 @@
 "use client";
 
 import { useFavorites } from "@/modules/sessions/hooks/useFavorites";
-import { FavoriteButton } from "@/modules/sessions/components/FavoriteButton";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -9,6 +8,7 @@ import {
   Clock,
   Calendar,
   ChevronRight,
+  Trash2,
 } from "lucide-react";
 import type { Session } from "@/modules/sessions/types/session.type";
 
@@ -34,7 +34,7 @@ const statusStyles: Record<Session["status"], string> = {
 const statusLabel: Record<Session["status"], string> = {
   live: "Live",
   upcoming: "Upcoming",
-  ended: "Finish",
+  ended: "Finished",
 };
 
 export default function FavoritesPage() {
@@ -43,42 +43,42 @@ export default function FavoritesPage() {
   return (
     <section className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
       <div className="w-full max-w-4xl">
-         <Link
+        <Link
           href="/events"
           className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text transition mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Events
-           </Link>
+        </Link>
 
-         <header className="mb-10">
+        <header className="mb-10">
           <p className="text-xs uppercase tracking-widest text-primary/80">
             My Favorite Sessions
           </p>
           <h1 className="mt-3 text-4xl sm:text-5xl font-display font-bold text-text flex items-center gap-3">
             <Heart className="w-8 h-8 fill-red-400 text-red-400" />
-            Favoris
+            Favorites
           </h1>
           <p className="mt-3 text-sm text-text-muted">
             {favorites.length === 0
               ? "No sessions saved"
-              : `${favorites.length} sessions saved`}
+              : `${favorites.length} session${favorites.length > 1 ? "s" : ""} saved`}
           </p>
         </header>
 
-         {favorites.length === 0 ? (
+        {favorites.length === 0 ? (
           <div className="rounded-2xl border border-border bg-bg-surface p-12 text-center">
             <Heart className="w-12 h-12 text-text-dim mx-auto mb-4" />
             <p className="text-text-dim mb-2">You don&apos;t have any favorite sessions yet.</p>
             <p className="text-sm text-text-dim mb-6">
-              Cliquez sur le cœur <Heart className="inline w-4 h-4 mx-1" /> sur une session pour l&apos;ajouter ici.
+              Click the heart on a session to save it here.
             </p>
             <Link
               href="/events"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 border border-primary/30 text-primary text-sm hover:bg-primary/20 transition"
             >
               Browse events
-              </Link>
+            </Link>
           </div>
         ) : (
           <ul className="grid gap-4">
@@ -91,7 +91,8 @@ export default function FavoritesPage() {
                     className="group block rounded-2xl border border-border bg-bg-surface p-6 transition hover:border-primary/50 hover:shadow-lg hover:-translate-y-0.5"
                   >
                     <div className="flex items-start gap-4">
-                       <div className="hidden sm:flex flex-col items-center justify-center min-w-[5.5rem] py-2 px-3 rounded-xl bg-bg-elevated border border-border">
+                      {/* Time column */}
+                      <div className="hidden sm:flex flex-col items-center justify-center min-w-[5.5rem] py-2 px-3 rounded-xl bg-bg-elevated border border-border">
                         <span className="text-lg font-semibold text-text">
                           {fmtTime(session.startTime)}
                         </span>
@@ -100,10 +101,11 @@ export default function FavoritesPage() {
                         </span>
                       </div>
 
-                       <div className="flex-1 min-w-0">
+                      {/* Main */}
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0 flex-1">
-                             <div className="flex items-center gap-2 flex-wrap">
+                            <div className="flex items-center gap-2 flex-wrap">
                               <span
                                 className={`inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusStyles[session.status]}`}
                               >
@@ -128,12 +130,12 @@ export default function FavoritesPage() {
                               </p>
                             )}
 
-                             <div className="mt-2 flex items-center gap-1 text-xs text-text-dim">
+                            <div className="mt-2 flex items-center gap-1 text-xs text-text-dim">
                               <Calendar className="w-3.5 h-3.5" />
                               {fmtDate(session.startTime)}
                             </div>
 
-                             {session.speakers && session.speakers.length > 0 && (
+                            {session.speakers && session.speakers.length > 0 && (
                               <div className="mt-3 flex items-center gap-2">
                                 <div className="flex -space-x-2">
                                   {session.speakers.slice(0, 4).map((sp) => (
@@ -158,7 +160,18 @@ export default function FavoritesPage() {
                           </div>
 
                            <div className="flex items-center gap-2 flex-shrink-0">
-                            <FavoriteButton session={session} />
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                removeFavorite(session.id);
+                              }}
+                              aria-label="Remove from favorites"
+                              title="Remove from favorites"
+                              className="flex items-center justify-center w-9 h-9 rounded-full border border-border bg-bg-elevated text-text-dim hover:border-red-400/50 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
                             <ChevronRight className="w-5 h-5 text-text-dim group-hover:text-primary group-hover:translate-x-0.5 transition" />
                           </div>
                         </div>
