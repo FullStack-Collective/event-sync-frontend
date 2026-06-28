@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Clock, MapPin, Layers, Users, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, Layers, Users, ChevronRight } from 'lucide-react';
 import { eventService } from '@/modules/events/services/event.service';
 import { Event } from '@/modules/events/types/event.types';
-import { parseUTCDate, formatUTCDate, isLiveUTC } from '@/shared/utils/format-date';
+import { parseUTCDate, isLiveUTC } from '@/shared/utils/format-date';
 
 const formatDate = (dateString: string) => {
   const date = parseUTCDate(dateString);
@@ -32,6 +32,7 @@ const getDuration = (start: string, end: string) => {
 
 export default function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,9 +62,7 @@ export default function EventDetailPage() {
   if (error || !event) return (
     <div className="text-center py-20">
       <p className="text-error mb-4">{error ?? 'Event not found'}</p>
-      <button onClick={() => router.push('/events')} className="btn-primary">
-        ← Back to Events
-      </button>
+       
     </div>
   );
 
@@ -72,24 +71,14 @@ export default function EventDetailPage() {
 
   return (
     <div className="container-custom py-8 max-w-4xl">
-      {/* Back Button */}
-      <Link
-        href="/events"
-        className="inline-flex items-center gap-2 text-sm font-medium text-text-muted hover:text-primary transition mb-6 group"
-      >
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition" />
-        Back to Events
-      </Link>
+   
 
-      {/* Hero Banner */}
-      <div className="relative h-48 rounded-xl overflow-hidden mb-[-32px] bg-gradient-sage">
-        {/* Subtle pattern */}
-        <div className="absolute inset-0 opacity-5"
+       <div className="relative h-48 rounded-xl overflow-hidden mb-[-32px] bg-gradient-sage">
+         <div className="absolute inset-0 opacity-5"
           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")` }}
         />
         
-        {/* Live Badge */}
-        {isLive && (
+         {isLive && (
           <div className="absolute bottom-4 left-4">
             <span className="live-badge">
               LIVE NOW
@@ -98,22 +87,18 @@ export default function EventDetailPage() {
         )}
       </div>
 
-      {/* Event Card */}
-      <div className="relative z-10 card p-6 pt-12">
-        {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-display font-bold text-text tracking-tight mb-3 leading-tight">
+       <div className="relative z-10 card p-6 pt-12">
+         <h1 className="text-2xl md:text-3xl font-display font-bold text-text tracking-tight mb-3 leading-tight">
           {event.title}
         </h1>
 
-        {/* Description */}
-        {event.description && (
+         {event.description && (
           <p className="text-sm text-text-muted leading-relaxed mb-5">
             {event.description}
           </p>
         )}
 
-        {/* Event Info */}
-        <div className="flex flex-wrap gap-x-5 gap-y-3 pb-4 border-b border-border">
+         <div className="flex flex-wrap gap-x-5 gap-y-3 pb-4 border-b border-border">
           <div className="inline-flex items-center gap-2 text-sm text-text-muted">
             <Calendar className="w-4 h-4 text-primary flex-shrink-0" />
             {formatDate(event.startDate)}
@@ -134,8 +119,7 @@ export default function EventDetailPage() {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="flex gap-8 pt-4">
+         <div className="flex gap-8 pt-4">
           <div className="text-center">
             <p className="text-2xl font-bold text-primary">{event.totalSessions}</p>
             <p className="text-xs text-text-muted">Sessions</p>
@@ -147,8 +131,7 @@ export default function EventDetailPage() {
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 mt-6">
+       <div className="flex flex-col sm:flex-row gap-4 mt-6">
         <Link
           href={`/events/${id}/sessions`}
           className="flex items-center justify-between bg-bg-surface border border-border rounded-xl px-5 py-4 hover:border-primary/50 hover:bg-bg-surface/80 transition-all duration-200 flex-1 group"
