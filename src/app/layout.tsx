@@ -22,7 +22,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EventSync - Real-Time Event Management",
+  title: "Agora - Real-Time Event Management",
   description: "Real-time event management platform for engaging participants",
 };
 
