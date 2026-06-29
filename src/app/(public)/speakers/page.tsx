@@ -10,7 +10,6 @@ export default async function SpeakersPage() {
   return (
     <main className="container-custom pt-28 md:pt-32 pb-20 md:pb-28 animate-fade-up">
 
-      {/* Section Header */}
       <div className="max-w-3xl mb-12 border-l-4 border-primary pl-6">
         <span className="font-mono text-xs text-secondary tracking-widest uppercase block mb-2">
           // Our Experts
@@ -24,7 +23,6 @@ export default async function SpeakersPage() {
         </p>
       </div>
 
-      {/* Grid or Empty State */}
       {speakers.length === 0 ? (
         <div className="text-center py-18 bg-bg-surface rounded-card border border-dashed border-text-dim">
           <p className="font-mono text-sm text-text-muted">
@@ -37,8 +35,8 @@ export default async function SpeakersPage() {
             {speakers.length} speaker{speakers.length > 1 ? 's' : ''} listed
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {speakers.map((speaker) => (
-              <SpeakerCard key={speaker.id} speaker={speaker} />
+            {speakers.map((speaker, index) => (
+              <SpeakerCard key={speaker.id} speaker={speaker} index={index} />
             ))}
           </div>
         </>

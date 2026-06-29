@@ -3,12 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, Variants } from 'framer-motion'; // <-- Importations critiques
+import { motion, Variants } from 'framer-motion'; 
 import { Speaker } from '../types/speaker.types';
 
 interface SpeakerCardProps {
   speaker: Speaker;
-  index: number; // <-- Requis pour calculer le décalage (stagger)
+  index: number;
 }
 
 function getInitials(name: string): string {
@@ -25,7 +25,6 @@ export function SpeakerCard({ speaker, index }: SpeakerCardProps) {
   const initials = getInitials(speaker.name);
   const avatarColor = getAvatarColor(speaker.name);
 
-  // Configuration stricte des états d'animation
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 24 },
     visible: { 
@@ -33,13 +32,13 @@ export function SpeakerCard({ speaker, index }: SpeakerCardProps) {
       y: 0,
       transition: {
         duration: 0.5,
-        delay: index * 0.05, // Décalage de 50ms par carte (0.05s)
-        ease: [0.21, 1.02, 0.43, 1.01] // Courbe fluide pour l'amorti
+        delay: index * 0.05,
+        ease: [0.21, 1.02, 0.43, 1.01]
       }
     },
     hover: {
-      y: -6, // Effet de flottement au survol
-      boxShadow: "0px 12px 30px rgba(0, 0, 0, 0.08)", // Ombre portée douce
+      y: -6,
+      boxShadow: "0px 12px 30px rgba(0, 0, 0, 0.08)",
       transition: { duration: 0.25, ease: "easeInOut" }
     }
   };
