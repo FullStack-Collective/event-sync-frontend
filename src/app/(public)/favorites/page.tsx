@@ -3,6 +3,7 @@
 import { useFavorites } from "@/modules/sessions/hooks/useFavorites";
 import Link from "next/link";
 import {
+ main
   Heart,
   Clock,
   Calendar,
@@ -42,7 +43,6 @@ export default function FavoritesPage() {
   return (
     <section className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
       <div className="w-full max-w-4xl">
-
         <header className="mb-10">
           <p className="text-xs uppercase tracking-widest text-primary/80">
             My Favorite Sessions
