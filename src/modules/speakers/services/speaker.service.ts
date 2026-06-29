@@ -1,3 +1,4 @@
+// FRONTEND : src/modules/speakers/services/speaker.service.ts
 import { apiFetch } from '@/shared/config/api.config';
 import { Speaker, SpeakerDetailed, SpeakerArraySchema, SpeakerDetailedSchema } from '../types/speaker.types';
 
@@ -15,5 +16,13 @@ export const SpeakerService = {
       schema: SpeakerDetailedSchema,
       next: { revalidate: 60 }
     });
+  },
+
+  getByEventId: async (eventId: number): Promise<Speaker[]> => {
+    return apiFetch<Speaker[]>(`/api/speakers?eventId=${eventId}`, {
+      schema: SpeakerArraySchema,
+      next: { revalidate: 60 }
+    });
   }
+  
 };

@@ -17,7 +17,7 @@ export  async function SpeakersSection() {
           // Meet Our Experts
         </span>
         <h2 className="font-display text-3xl font-black tracking-tight sm:text-5xl uppercase">
-          <span className="text-gradient-primary">Featured Speakers</span>
+          <span className="text-gradient-primary">Our Speakers</span>
         </h2>
         <p className="mt-4 text-md text-text-muted max-w-xl">
           Discover the industry leaders and visionaries who will be sharing their 
@@ -34,8 +34,8 @@ export  async function SpeakersSection() {
       ) : (
         <div className="space-y-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {featuredSpeakers.map((speaker) => (
-              <SpeakerCard key={speaker.id} speaker={speaker} />
+            {featuredSpeakers.map((speaker, index) => (
+              <SpeakerCard key={speaker.id} speaker={speaker} index={index} />
             ))}
           </div>
 
