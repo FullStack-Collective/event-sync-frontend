@@ -11,7 +11,7 @@ export  async function SpeakersSection() {
   const featuredSpeakers = speakers.slice(0, 4);
 
   return (
-    <section className="container-custom py-16 md:py-24 animate-fade-up">
+    <section id="speakers" className="container-custom py-16 md:py-24 animate-fade-up">
         <div className="max-w-3xl mb-12 border-l-4 border-primary pl-6">
         <span className="font-mono text-xs text-secondary tracking-widest uppercase block mb-2">
           // Meet Our Experts
