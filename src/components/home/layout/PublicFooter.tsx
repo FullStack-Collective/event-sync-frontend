@@ -9,7 +9,7 @@ export function PublicFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-bg-surface/50 border-t border-border pt-5 md:pt-10 pb-2 md:pb-5">
+    <footer className="relative bg-bg-surface/50 border-t border-border">
       <div className="container-custom mx-auto py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
