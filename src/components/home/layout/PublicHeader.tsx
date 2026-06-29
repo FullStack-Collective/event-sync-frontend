@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import Image from "next/image";
 import logo from "@/app/(public)/logo/Logo.png";
+import { useFavorites } from "@/modules/sessions/hooks/useFavorites";
 
 const navItems = [
   { label: "Home", href: "#home", sectionId: "home" },
@@ -20,25 +21,17 @@ export function PublicHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState("");
+  const { favorites } = useFavorites();
 
   useEffect(() => {
-  const updateHash = () => {
-    setCurrentHash(window.location.hash);
-  };
-
-  updateHash();
-
-  window.addEventListener("hashchange", updateHash);
-
-  return () => {
-    window.removeEventListener("hashchange", updateHash);
-  };
-}, []);
+    const updateHash = () => setCurrentHash(window.location.hash);
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -56,28 +49,24 @@ export function PublicHeader() {
     }
   }, [pathname]);
 
-const handleNavigation = (
-  e: React.MouseEvent<HTMLAnchorElement>,
-  href: string,
-  sectionId: string
-) => {
-  e.preventDefault();
-  setIsMobileMenuOpen(false);
-
-  if (pathname === "/") {
-    const element = document.getElementById(sectionId);
-
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-
-      window.history.pushState(null, "", href);
-
-      setCurrentHash(href);
+  const handleNavigation = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    sectionId: string
+  ) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    if (pathname === "/") {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href);
+        setCurrentHash(href);
+      }
+    } else {
+      router.push(`/${href}`);
     }
-  } else {
-    router.push(`/${href}`);
-  }
-};
+  };
 
   return (
     <>
@@ -89,7 +78,6 @@ const handleNavigation = (
         }`}
       >
         <nav className="container-custom mx-auto flex items-center justify-between">
-          {/* Logo */}
           <Link href="/" className="group relative z-10">
             <div className="flex items-center gap-2">
               <Image
@@ -102,12 +90,9 @@ const handleNavigation = (
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => {
-              const isActive =
-              pathname === "/" &&
-              currentHash === item.href;
+              const isActive = pathname === "/" && currentHash === item.href;
               return (
                 <a
                   key={item.label}
@@ -124,15 +109,29 @@ const handleNavigation = (
             })}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block py-2">
+           <div className="hidden md:flex items-center gap-3 py-2">
+            <Link
+              href="/favorites"
+              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-bg-surface text-sm text-text-muted hover:border-warm-white hover:text-text transition"
+            >
+              <Heart
+                className={`w-4 h-4 transition-colors ${
+                  favorites.length > 0 ? "fill-red-400 text-red-400" : ""
+                }`}
+              />
+              My Favorites
+              {favorites.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                  {favorites.length > 9 ? "9+" : favorites.length}
+                </span>
+              )}
+            </Link>
             <Link href="/events" className="btn-primary">
               Explore all events
               <span className="ml-2">→</span>
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden z-50 relative p-2"
@@ -146,7 +145,6 @@ const handleNavigation = (
         </nav>
       </header>
 
-      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div
@@ -164,8 +162,24 @@ const handleNavigation = (
                 {item.label}
               </a>
             ))}
-            <Link href="/events" className="btn-primary mt-4">
+            <Link
+              href="/favorites"
+              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-bg-surface text-sm text-text-muted hover:border-red-400/50 hover:text-red-400 transition mt-4"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Heart
+                className={`w-4 h-4 ${favorites.length > 0 ? "fill-red-400 text-red-400" : ""}`}
+              />
+              My Favorites
+              {favorites.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                  {favorites.length > 9 ? "9+" : favorites.length}
+                </span>
+              )}
+            </Link>
+            <Link href="/events" className="btn-primary">
               Explore all events
+              <span className="ml-2">→</span>
             </Link>
           </div>
         </div>

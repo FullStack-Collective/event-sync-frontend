@@ -22,8 +22,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EventSync - Gestion d'événements en temps réel",
-  description: "Plateforme de gestion d'événements et d'engagement des participants en temps réel",
+  title: "Agora - Real-Time Event Management",
+  description: "Real-time event management platform for engaging participants",
 };
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${dmSans.variable} ${syne.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${syne.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased min-h-screen flex flex-col">
         {children}
       </body>

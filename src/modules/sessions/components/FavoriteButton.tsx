@@ -20,8 +20,8 @@ export function FavoriteButton({ session, className = "" }: FavoriteButtonProps)
         e.stopPropagation();
         toggleFavorite(session);
       }}
-      aria-label={active ? "Retirer des favoris" : "Ajouter aux favoris"}
-      title={active ? "Retirer des favoris" : "Ajouter aux favoris"}
+      aria-label={active ? "Remove from Favorites" : "Add to Favorites"}
+      title={active ? "Remove from Favorites" : "Add to Favorites"}
       className={`group flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-200
         ${active
           ? "border-red-400/60 bg-red-500/15 text-red-400 hover:bg-red-500/25"

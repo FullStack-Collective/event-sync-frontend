@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Clock, ChevronRight, Radio } from "lucide-react";
+import { Clock, ChevronRight} from "lucide-react";
 import { FavoriteButton } from "./FavoriteButton";
 import type { Session } from "../types/session.type";
 
 const fmtTime = (d: string) =>
-  new Date(d).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  new Date(d).toLocaleTimeString("en-EN", { hour: "2-digit", minute: "2-digit" });
 
 const durationMin = (a: string, b: string) =>
   Math.max(0, Math.round((new Date(b).getTime() - new Date(a).getTime()) / 60000));
@@ -18,9 +18,9 @@ const statusStyles: Record<Session["status"], string> = {
 };
 
 const statusLabel: Record<Session["status"], string> = {
-  live: "En direct",
-  upcoming: "À venir",
-  ended: "Terminé",
+  live: "live",
+  upcoming: "upcoming",
+  ended: "finish",
 };
 
 interface Props {
@@ -32,7 +32,7 @@ export function SessionList({ sessions, eventId }: Props) {
   if (sessions.length === 0) {
     return (
       <div className="rounded-2xl border border-border bg-bg-surface p-12 text-center">
-        <p className="text-text-dim">Aucune session disponible pour cet événement.</p>
+        <p className="text-text-dim">There are no sessions available for this event.</p>
       </div>
     );
   }
@@ -48,8 +48,7 @@ export function SessionList({ sessions, eventId }: Props) {
               className="group block rounded-2xl border border-border bg-bg-surface p-6 transition hover:border-primary/50 hover:shadow-lg hover:-translate-y-0.5"
             >
               <div className="flex items-start gap-4">
-                {/* Time column */}
-                <div className="hidden sm:flex flex-col items-center justify-center min-w-[5.5rem] py-2 px-3 rounded-xl bg-bg-elevated border border-border">
+                 <div className="hidden sm:flex flex-col items-center justify-center min-w-[5.5rem] py-2 px-3 rounded-xl bg-bg-elevated border border-border">
                   <span className="text-lg font-semibold text-text">
                     {fmtTime(session.startTime)}
                   </span>
@@ -58,8 +57,7 @@ export function SessionList({ sessions, eventId }: Props) {
                   </span>
                 </div>
 
-                {/* Main */}
-                <div className="flex-1 min-w-0">
+                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -111,8 +109,7 @@ export function SessionList({ sessions, eventId }: Props) {
                       )}
                     </div>
 
-                    {/* Actions : favoris + chevron */}
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                     <div className="flex items-center gap-2 flex-shrink-0">
                       <FavoriteButton session={session} />
                       <ChevronRight className="w-5 h-5 text-text-dim group-hover:text-primary group-hover:translate-x-0.5 transition" />
                     </div>
